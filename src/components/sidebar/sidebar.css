@@ -6,7 +6,7 @@
   top: 50px;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 5px;
 }
 
@@ -16,7 +16,7 @@
 
 ::-webkit-scrollbar-thumb {
   background-color: rgb(172, 172, 172);
-}
+} */
 
 .sidebarWrapper {
   padding: 20px;

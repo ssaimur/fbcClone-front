@@ -1,0 +1,35 @@
+.comments {
+  display: grid;
+  grid-template-columns: 50px 1fr 20px;
+  padding: 5px;
+  border-bottom: 1px solid lightgreen;
+  position: relative;
+}
+
+.commentsLeft {
+  display: flex;
+  justify-content: center;
+}
+
+.cmntdp {
+  height: 30px;
+  width: 30px;
+}
+
+.commentsCenterTop {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.commentDate {
+  margin-left: 5px;
+}
+
+.commentsCenterBottom {
+  font-size: 13px;
+}
+
+.commentsRight {
+  color: #d00412;
+  cursor: pointer;
+}

@@ -9,6 +9,7 @@
 
 .loginWrapper {
   width: 70%;
+  max-width: 960px;
   height: 70%;
   display: flex;
 }
@@ -44,25 +45,25 @@
 
 .loginInput {
   height: 50px;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 1px solid gray;
   font-size: 18px;
   padding-left: 20px;
 }
 
-.loginInput:focus {
-  outline: none;
-}
-
 .loginButton {
   height: 50px;
-  border-radius: 10px;
+  border-radius: 5px;
   border: none;
   background-color: #1775ee;
   color: #fff;
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
+}
+
+.loginButton:disabled {
+  cursor: not-allowed;
 }
 
 .loginForgot {
@@ -73,11 +74,11 @@
 
 .loginRegisterButton {
   height: 50px;
-  border-radius: 10px;
+  border-radius: 5px;
   border: none;
   background-color: #42b72a;
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   cursor: pointer;
 }

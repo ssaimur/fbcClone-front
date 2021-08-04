@@ -1,45 +1,46 @@
 import React from 'react';
 import './topbar.css';
 import { Search, Person, Chat, Notifications } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
+import { useGlobalContext } from '../../context/authContext/authContext';
 
 const Topbar = () => {
+  const { user } = useGlobalContext();
+
   return (
     <div className='topbarContainer'>
       <div className='topbarLeft'>
-        <span className='logo'>fbClone</span>
+        <Link to='/' style={{ textDecoration: 'none' }}>
+          <span className='logo'>MERN</span>
+        </Link>
       </div>
       <div className='topbarCenter'>
         <div className='searchbar'>
-          <Search className='searchIcon' />
           <input
-            placeholder='Search for friends, posts or videos...'
+            placeholder='Search friends by their usename'
             className='searchInput'
           />
+          <Search className='searchIcon' />
         </div>
-      </div>
-      <div className='topbarRight'>
-        <div className='topbarLinks'>
-          <span className='topbarLink'>Home</span>
-          <span className='topbarLink'>Timeline</span>
-        </div>
-        <div className='topbarIcons'>
-          <div className='topbarIconItem'>
-            <Person />
-            <span className='topbarIconBadge'>1</span>
-          </div>
-          <div className='topbarIconItem'>
-            <Chat />
-            <span className='topbarIconBadge'>2</span>
-          </div>
-          <div className='topbarIconItem'>
-            <Notifications />
-            <span className='topbarIconBadge'>1</span>
-          </div>
-        </div>
-        <img src='/assets/persons/1.jpg' alt='logo' className='topbarImg' />
       </div>
     </div>
   );
 };
 
 export default Topbar;
+
+{
+  /* <Link to={`/${user.username}`}>
+  <img
+    src={
+      user.dpImage
+        ? `/posts/file/${user.dpImage}`
+        : `/assets/persons/${
+            user.gender === 'Male' ? 'noAvatar.jpg' : 'noAvatarFemale.png'
+          }`
+    }
+    alt='dp'
+    className='topbarImg'
+  />
+</Link>; */
+}

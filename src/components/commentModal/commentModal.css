@@ -1,0 +1,22 @@
+.commentDelete {
+  position: absolute;
+  background-color: #fff;
+  top: 5px;
+  right: 5px;
+}
+
+.commentDelete button {
+  font-size: 13px;
+  margin-left: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.sure {
+  font-size: 13px;
+}
+
+.yes {
+  background-color: #d00412;
+  color: #fff;
+}
