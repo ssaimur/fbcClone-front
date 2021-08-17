@@ -1,0 +1,43 @@
+.person {
+  display: flex;
+  margin: 10px 0;
+}
+.personWrapper {
+  margin-left: 20px;
+}
+
+.personLeft {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.personDp {
+  height: 50px;
+  width: 50px;
+}
+
+.personRight {
+  margin: 2px 0 0 10px;
+  line-height: 18px;
+}
+
+.personName {
+  color: var(--text-primary);
+  font-size: 16px;
+}
+
+.personRightBottom {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.personUsername {
+  color: var(--text-secondary);
+  font-size: 14px;
+  text-align: left;
+}
+
+.personRight {
+  width: fit-content;
+}

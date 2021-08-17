@@ -1,0 +1,41 @@
+.profileOptions {
+  position: absolute;
+  left: -50px;
+  bottom: 45px;
+  width: fit-content;
+  height: auto;
+  background-color: var(--clr-primary);
+  border-radius: 5px;
+  color: #000;
+  border: 1px solid var(--brdr-primary);
+}
+
+.profileOptionsItems {
+  display: flex;
+  width: 75px;
+  align-items: center;
+  padding: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--clr-white);
+}
+
+.profileOptionsItems svg {
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+.profileOptions::after {
+  content: '';
+  position: absolute;
+  right: 37px;
+  top: 100%;
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-color: var(--clr-primary);
+  border-bottom: 1px solid var(--brdr-primary);
+  border-left: 1px solid var(--brdr-primary);
+  border-radius: 0 50px 0 0;
+  transform: translate(50%, -50%) rotate(-45deg);
+}

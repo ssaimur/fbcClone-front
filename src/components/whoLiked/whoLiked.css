@@ -1,0 +1,37 @@
+.whoLiked {
+  display: flex;
+}
+.whoLikedWrapper {
+  margin-left: 20px;
+}
+
+.whoLikedLeft {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.whoLikdeRight {
+  margin-left: 10px;
+  line-height: 15px;
+}
+
+.whoLikedName {
+  color: var(--clr-white);
+  font-size: 15px;
+}
+
+.whoLikdeRightBottom {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.whoLikedUsername {
+  color: rgb(219, 214, 214);
+  font-size: 13px;
+  text-align: left;
+}
+
+.whoLikedRight {
+  width: fit-content;
+}

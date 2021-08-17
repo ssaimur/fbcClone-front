@@ -1,22 +1,18 @@
 .comment {
   display: flex;
   align-items: center;
-  background-color: lightgreen;
+  background-color: var(--clr-secondary);
   height: 50px;
+}
+
+.expComment {
+  background-color: var(--clr-primary);
 }
 
 .commentLeft {
   padding: 5px;
   display: flex;
   align-items: center;
-}
-
-.commentDp {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid lightblue;
 }
 
 .commentRight {
@@ -40,22 +36,29 @@
 .commentbar {
   width: 100%;
   height: 30px;
-  background-color: #fff;
+  background-color: var(--back-primary);
   border-radius: 30px;
   display: flex;
   align-items: center;
 }
 
+.commentLoading {
+  color: var(--brdr-primary);
+}
+
 .commentIcon {
   font-size: 20px !important;
   margin-left: 10px;
+  color: var(--brdr-primary);
 }
 
 .commentInput {
   margin: 0 auto;
   border: none;
-  width: 95%;
+  width: 90%;
   font-size: 13px;
+  background-color: var(--back-primary);
+  color: var(--clr-white);
 }
 
 .commentInput:focus {

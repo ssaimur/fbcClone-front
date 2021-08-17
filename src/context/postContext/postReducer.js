@@ -1,8 +1,11 @@
 import {
+  CLEAR_POST_ERROR,
   FETCH_POSTS,
   FETCH_STARTS,
   POST_ADDED,
   POST_DELETED,
+  POST_FAILED,
+  POST_UPDATED,
 } from '../../constants';
 
 const reducer = (state, action) => {
@@ -22,9 +25,31 @@ const reducer = (state, action) => {
       );
       return { ...state, posts: deletedPosts };
 
+    case POST_FAILED:
+      return { ...state, postError: action.payload };
+
     case POST_ADDED:
       state.posts.unshift(action.payload);
-      return { ...state, posts: state.posts };
+      return {
+        ...state,
+        posts: state.posts,
+        postError: null,
+      };
+    case POST_UPDATED:
+      const updatedPost = state.posts.map((item) => {
+        if (item._id === action.payload._id) {
+          item = action.payload;
+        }
+        return item;
+      });
+      return {
+        ...state,
+        posts: updatedPost,
+        postError: null,
+      };
+
+    case CLEAR_POST_ERROR:
+      return { ...state, postError: null };
 
     default:
       break;

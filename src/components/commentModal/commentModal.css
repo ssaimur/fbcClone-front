@@ -1,6 +1,6 @@
 .commentDelete {
   position: absolute;
-  background-color: #fff;
+  background-color: var(--clr-secondary);
   top: 5px;
   right: 5px;
 }
@@ -8,12 +8,13 @@
 .commentDelete button {
   font-size: 13px;
   margin-left: 5px;
-  border: 1px solid gray;
+  border: 1px solid var(--brdr-secondary);
   border-radius: 5px;
 }
 
 .sure {
   font-size: 13px;
+  color: var(--text-secondary);
 }
 
 .yes {

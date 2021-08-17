@@ -1,0 +1,41 @@
+.dialogFront {
+  background-color: var(--clr-primary);
+  bottom: -100%;
+  transform: translate(-50%, 50%);
+}
+
+.dialogFrontShow {
+  bottom: 50%;
+}
+
+.dialogFront .deleteAlert {
+  margin: 10px 0;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.dialogFront span {
+  font-size: 15px;
+  color: var(--clr-white);
+  margin-bottom: 10px;
+}
+.dialogFront .dialogYes {
+  background-color: var(--clr-optional);
+}
+.dialogFront .dialogCancel {
+  background-color: var(--brdr-primary);
+}
+
+.dialogBtns button {
+  width: fit-content;
+  font-size: 15px;
+  color: var(--back-primary);
+  padding: 5px 10px;
+  border: none;
+  border-radius: var(--radius-thirty);
+  margin-left: 10px;
+  cursor: pointer;
+  /* background-color: var(--brdr-secondary); */
+  /* border: 1px solid var(--clr-white); */
+  color: var(--clr-white);
+}

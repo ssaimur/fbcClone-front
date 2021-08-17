@@ -8,15 +8,13 @@ import Rightbar from '../../components/rightbar/Rightbar';
 const Explore = () => {
   return (
     <>
-      <Topbar />
-      <div className='profile'>
-        <Sidebar />
-        <div className='profileRight'>
-          <div className='profileRightBottom'>
-            <Feed explorePosts />
-            <Rightbar />
+      <div className='explore'>
+        <div className='exploreWrapper'>
+          <div className='sticker exploreSticker'>
+            <p>Explore posts across Firegram</p>
           </div>
         </div>
+        <Feed explorePosts />
       </div>
     </>
   );

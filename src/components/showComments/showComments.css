@@ -2,8 +2,9 @@
   display: grid;
   grid-template-columns: 50px 1fr 20px;
   padding: 5px;
-  border-bottom: 1px solid lightgreen;
+  border-bottom: 1px solid var(--brdr-secondary);
   position: relative;
+  /* background-color: var(--clr-secondary); */
 }
 
 .commentsLeft {
@@ -11,14 +12,13 @@
   justify-content: center;
 }
 
-.cmntdp {
-  height: 30px;
-  width: 30px;
-}
-
 .commentsCenterTop {
   font-size: 15px;
   font-weight: 500;
+}
+
+.commentName {
+  color: var(--text-primary);
 }
 
 .commentDate {
@@ -27,6 +27,10 @@
 
 .commentsCenterBottom {
   font-size: 13px;
+}
+
+.commentComment {
+  color: var(--clr-white);
 }
 
 .commentsRight {

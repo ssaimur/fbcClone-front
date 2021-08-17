@@ -1,51 +1,126 @@
 .profile {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.profileWrapper {
+  padding: 10px;
+  overflow: hidden;
+}
+
+.profileTop {
   display: flex;
 }
 
-.profileRight {
-  flex: 9;
-}
-
-.profileCover {
-  height: 320px;
+.profileTopLeft {
   position: relative;
+  height: 100px;
 }
 
-.profileCoverImg {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-}
-
-.profileUserImg {
-  width: 150px;
-  height: 150px;
-  border: 3px solid lightblue;
-  background-color: lightcyan;
-  border-radius: 50%;
-  object-fit: cover;
+.profileTopLeft svg {
   position: absolute;
-  top: 150px;
-  left: 0;
-  right: 0;
-  margin: auto;
+  padding: 2px;
+  color: var(--back-primary);
+  background-color: white;
+  border: 3px solid var(--back-primary);
+  border-radius: 50%;
+  font-size: 23px;
+  top: 75px;
+  right: 5px;
+  cursor: pointer;
 }
 
-.profileInfo {
+.profileTopRight {
+  margin-left: 10px;
+}
+
+.topInfo {
+  margin-top: 10px;
+}
+
+.profileTopRight h3 {
+  color: var(--clr-white);
+}
+
+.profileTopRight p {
+  color: var(--text-secondary);
+}
+
+.followBtn {
+  margin-top: 10px;
+  background-color: var(--clr-optional);
+}
+
+.unfollowBtn {
+  background-color: transparent;
+  border: 1px solid var(--clr-white);
+}
+
+.uploadBtn {
+  background-color: green;
+  display: flex;
+  align-items: center;
+}
+
+.uploading {
+  background-color: gray;
+}
+
+.uploading:disabled {
+  cursor: not-allowed;
+}
+
+.uploadBtn svg {
+  margin: 0 0 3px 5px;
+}
+
+.profileDp {
+  height: 100px;
+  width: 100px;
+  border: 3px solid var(--brdr-primary);
+}
+
+.profileBottom {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
-.profileInfoName {
-  font-size: 24px;
-}
-
-.profileInfoDesc {
-  font-weight: 300;
-}
-
-.profileRightBottom {
+.profileDesc {
   display: flex;
+  align-items: center;
+  color: var(--clr-white);
+  margin-top: 5px;
+}
+
+.desc {
+  font-size: 14px;
+  color: rgb(233, 224, 224);
+  margin: 20px 0 10px 0;
+}
+
+.profileDesc p {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.profileDesc svg {
+  font-size: 20px;
+  margin-right: 10px;
+  color: var(--text-secondary);
+}
+
+.followNumbers svg {
+  margin: 0;
+  color: white;
+}
+
+.profileFollowers {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.number {
+  margin-right: 5px;
 }

@@ -1,17 +1,32 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, useReducer, useEffect } from 'react';
 import reducer from './authReducer';
 
 const AuthContext = React.createContext();
 
+const getLocalStorage = () => {
+  const user = localStorage.getItem('user');
+  if (user) {
+    return JSON.parse(user);
+  } else {
+    return null;
+  }
+};
+
 // sets the current social medial user
 const initialState = {
-  user: null,
+  user: getLocalStorage(),
   isFetching: false,
-  error: null,
+  loginError: null,
+  regiError: null,
 };
 
 const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    localStorage.setItem('user', JSON.stringify(state.user));
+  }, [state.user]);
+
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>
       {children}

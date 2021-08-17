@@ -1,31 +1,27 @@
 import { Delete, Edit } from '@material-ui/icons';
 import React from 'react';
-import { POST_DELETED } from '../../constants';
-import { useGlobalPostContext } from '../../context/postContext/postContext';
+import { DIALOG_DELETE } from '../../constants';
+import { useGlobalDialogContext } from '../../context/dialogContext/dialogContext';
 import './optionModal.css';
 
-const OptionModal = ({ postId, userId, fileId }) => {
-  const { dispatch } = useGlobalPostContext();
+const OptionModal = ({ deleteCreds, updateCreds }) => {
+  const { dispatch } = useGlobalDialogContext();
+  const { setShow } = updateCreds;
 
-  const handleDelete = async () => {
-    dispatch({ type: POST_DELETED, payload: postId });
-
-    await fetch(`posts/delete/${postId}`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId, fileId }),
-    });
-  };
+  // const deleteCreds = { postId, userId, fileId };
 
   return (
     <div className='optionModal'>
-      <div className='optionModalItems' onClick={handleDelete}>
+      <span
+        className='optionModalItems'
+        onClick={() => dispatch({ type: DIALOG_DELETE, payload: deleteCreds })}
+      >
         Delete <Delete />
-      </div>
-      <hr />
-      <div className='optionModalItems'>
+      </span>
+
+      <span className='optionModalItems' onClick={() => setShow(true)}>
         Edit <Edit />
-      </div>
+      </span>
     </div>
   );
 };

@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import './register.css';
 import { Link } from 'react-router-dom';
 import { registerCall } from '../../apiCalls';
 import { useGlobalContext } from '../../context/authContext/authContext';
 import { Backdrop, CircularProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import { handleRegisterSubmit } from '../../helper';
 
 const useStyles = makeStyles((theme) => ({
@@ -17,14 +18,15 @@ const useStyles = makeStyles((theme) => ({
 const Register = () => {
   const classes = useStyles();
 
-  const { dispatch, isFetching } = useGlobalContext();
+  const { dispatch, isFetching, regiError } = useGlobalContext();
+  const { type, msg } = regiError || {};
+  const [showPassword, setShowPassword] = useState(false);
 
   const firstName = useRef(null);
   const lastName = useRef(null);
   const username = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
-  const passwordAgain = useRef(null);
 
   const registerCredentials = {
     firstName,
@@ -32,7 +34,6 @@ const Register = () => {
     username,
     email,
     password,
-    passwordAgain,
     registerCall,
     dispatch,
   };
@@ -56,9 +57,10 @@ const Register = () => {
                 type='text'
                 placeholder='First name'
                 className='registerInput nameInput'
-                required
                 ref={firstName}
+                required
               />
+              <span>{type === 'firstName' && msg}</span>
               <input
                 type='text'
                 placeholder='Last name'
@@ -71,30 +73,30 @@ const Register = () => {
               type='text'
               placeholder='Username'
               className='registerInput'
-              required
               ref={username}
+              required
             />
+            <span>{type === 'username' && msg}</span>
             <input
               type='email'
               placeholder='Email'
               className='registerInput'
-              required
               ref={email}
+              required
             />
+            <span>{type === 'email' && msg}</span>
             <input
-              type='password'
+              type={`${showPassword ? 'text' : 'password'}`}
               placeholder='Password'
               className='registerInput'
               required
               minLength='6'
               ref={password}
+              autoComplete='off'
             />
-            <input
-              type='password'
-              placeholder='Confirm password'
-              className='registerInput'
-              ref={passwordAgain}
-            />
+            <VisibilityIcon onClick={() => setShowPassword(!showPassword)}>
+              showPassword
+            </VisibilityIcon>
             <button className='registerButton' disabled={isFetching}>
               {isFetching ? (
                 <Backdrop className={classes.backdrop} open={isFetching}>

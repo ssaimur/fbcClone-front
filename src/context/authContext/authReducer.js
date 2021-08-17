@@ -2,6 +2,8 @@ import {
   LOGIN_FAILURE,
   LOGIN_START,
   LOGIN_SUCCESS,
+  LOGOUT_STARTS,
+  LOGOUT_ENDS,
   REGISTRATION_FAILURE,
   REGISTRATION_START,
   REGISTRATION_SUCCESS,
@@ -12,20 +14,36 @@ const reducer = (state, action) => {
     case LOGIN_START:
       return { ...state, isFetching: true };
 
-    case LOGIN_SUCCESS:
-      return { ...state, isFetching: false, user: action.payload };
-
     case LOGIN_FAILURE:
-      return { ...state, isFetching: false, error: action.payload };
+      return { ...state, isFetching: false, loginError: action.payload };
+
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        user: action.payload.user,
+        loginError: null,
+      };
+
+    case LOGOUT_STARTS:
+      return { ...state, isFetching: true };
+
+    case LOGOUT_ENDS:
+      return { ...state, isFetching: false, user: null };
 
     case REGISTRATION_START:
       return { ...state, isFetching: true };
 
     case REGISTRATION_SUCCESS:
-      return { ...state, isFetching: false, user: action.payload };
+      return {
+        ...state,
+        isFetching: false,
+        user: action.payload.newUser,
+        regiError: null,
+      };
 
     case REGISTRATION_FAILURE:
-      return { ...state, isFetching: false, error: action.payload };
+      return { ...state, isFetching: false, regiError: action.payload };
 
     default:
       throw new Error(`No matching error type - ${action.type}`);

@@ -2,14 +2,15 @@ import React, { useRef } from 'react';
 import './login.css';
 import { useGlobalContext } from '../../context/authContext/authContext';
 import { CircularProgress } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import { loginCall } from '../../apiCalls';
 import { handleLoginSubmit } from '../../helper';
 
 const Login = () => {
   const email = useRef(null);
   const password = useRef(null);
-  const { user, isFetching, dispatch } = useGlobalContext();
-  console.log(user, isFetching);
+  const { loginError, isFetching, dispatch } = useGlobalContext();
+  const { type, msg } = loginError || {};
   const loginCredentials = { email, password, loginCall, dispatch };
 
   return (
@@ -33,20 +34,25 @@ const Login = () => {
               className='loginInput'
               ref={email}
             />
+            <span>{type === 'email' && msg}</span>
             <input
               type='password'
               placeholder='Password'
               className='loginInput'
               minLength='6'
               required
+              autoComplete='off'
               ref={password}
             />
+            <span>{type === 'password' && msg}</span>
             <button className='loginButton' disabled={isFetching}>
               {isFetching ? <CircularProgress color='inherit' /> : 'Log in'}
             </button>
             <span className='loginForgot'>Forgot password?</span>
-            <button className='loginRegisterButton'>Create new account</button>
           </form>
+          <Link to='/register'>
+            <button className='loginRegisterButton'>Create new account</button>
+          </Link>
         </div>
       </div>
     </div>

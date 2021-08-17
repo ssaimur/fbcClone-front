@@ -1,0 +1,39 @@
+.imageEditFront {
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.imageEditTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.imageEditTop .imageEditTitle {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  color: var(--clr-white);
+}
+
+.imageEditFront .imageEditClose {
+  display: block;
+  width: fit-content;
+  margin-left: auto;
+  font-size: 25px;
+  color: var(--clr-optional);
+  /* padding: 5px 10px; */
+  /* border-radius: var(--radius-thirty); */
+  background-color: var(--clr-optional);
+  /* border: 1px solid var(--clr-white); */
+  color: var(--clr-white);
+  /* margin-top: 10px; */
+  cursor: pointer;
+}
+
+.imageEditBottom {
+  height: auto;
+  max-height: 400px;
+  overflow: auto;
+}

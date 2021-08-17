@@ -4,10 +4,10 @@
   bottom: 100%;
   width: fit-content;
   height: auto;
-  background-color: lightgray;
+  background-color: var(--clr-primary);
   border-radius: 5px;
   color: #000;
-  border: 1px solid lightgray;
+  border: 1px solid var(--brdr-secondary);
 }
 
 .optionModalItems {
@@ -16,7 +16,7 @@
   padding: 5px;
   font-size: 16px;
   cursor: pointer;
-  z-index: 10;
+  color: var(--clr-white);
 }
 
 .optionModalItems svg {
@@ -32,6 +32,6 @@
   display: block;
   width: 20px;
   height: 20px;
-  background-color: lightgray;
+  background-color: var(--clr-primary);
   transform: translate(50%, -50%) rotate(-45deg);
 }

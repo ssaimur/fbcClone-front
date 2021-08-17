@@ -1,27 +1,43 @@
 .topbarContainer {
   height: 50px;
-  width: 100%;
+  width: 100vw;
+  max-width: 100%;
   /* background-color: #1877f2; */
-  background-color: lightgreen;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  padding: 0 10px;
-  align-items: center;
+  background-color: var(--clr-primary);
   position: sticky;
   top: 0;
-  z-index: 99999;
+  z-index: 12;
+  display: flex;
+  align-items: center;
 }
 
-/* .topbarLeft {
+.topbarWrapper {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  width: 90%;
+  max-width: 1170px;
+  margin: 0 auto;
+}
+
+.topbarLeft {
   display: flex;
   justify-content: center;
+}
+
+.topbarLeft a {
+  display: flex;
+  align-items: center;
+}
+
+/* .logo {
+  width: 35px;
+  height: auto;
+  cursor: pointer;
 } */
 
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #fff;
-  cursor: pointer;
+.logoIcon {
+  color: var(--clr-optional);
 }
 
 .topbarCenter {
@@ -31,23 +47,29 @@
 .searchbar {
   width: 100%;
   height: 30px;
-  background-color: #fff;
+  background-color: var(--back-primary);
   border-radius: 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border: 1px solid var(--brdr-primary);
+  overflow: hidden;
 }
 
 .searchIcon {
   font-size: 20px !important;
-  margin-right: 10px;
+  padding: 5px 10px;
   cursor: pointer;
+  color: var(--clr-white);
+  border-left: 1px solid var(--brdr-primary);
 }
 
 .searchInput {
   border: none;
   width: 100%;
   margin-left: 10px;
+  background-color: var(--back-primary);
+  border: var(--brdr-primary);
 }
 
 .searchInput:focus {

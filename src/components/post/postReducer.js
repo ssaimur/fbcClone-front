@@ -16,8 +16,23 @@ const reducer = (state, action) => {
       return { ...state, user: action.payload };
 
     case INCREASE_DECREASE_LIKES:
-      const likes = state.isLiked ? state.like - 1 : state.like + 1;
-      return { ...state, like: likes, isLiked: !state.isLiked };
+      if (state.isLiked) {
+        const like = state.like.filter((item) => item !== action.payload);
+        return {
+          ...state,
+          isLiked: !state.isLiked,
+          like,
+        };
+      }
+      if (!state.isLiked) {
+        state.like.push(action.payload);
+        return {
+          ...state,
+          isLiked: !state.isLiked,
+          like: [...new Set(state.like)],
+          // whoLiked: state.whoLiked,
+        };
+      }
 
     case COMMENT_TOGGLE:
       return { ...state, isComment: !state.isComment };

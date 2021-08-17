@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import { COMMENT_ADDED } from '../../constants';
 import './comment.css';
 
-const Comments = ({ user, postId, dispatch }) => {
+const Comments = ({ user, postId, dispatch, explore }) => {
   const { dpImage, firstName, lastName, _id, username } = user;
   const [isSending, setIsSending] = useState(false);
   const [comment, setComment] = useState('');
@@ -27,14 +27,14 @@ const Comments = ({ user, postId, dispatch }) => {
     });
     const resData = await response.json();
     commentCreds.commentId = resData.buf;
-    console.log(resData.buf);
+
     dispatch({ type: COMMENT_ADDED, payload: commentCreds });
     setComment('');
     setIsSending(false);
   };
 
   return (
-    <div className='comment'>
+    <div className={`comment ${explore && 'expComment'}`}>
       <div className='commentLeft'>
         <img
           className='commentDp'
@@ -63,7 +63,7 @@ const Comments = ({ user, postId, dispatch }) => {
         </div>
         {isSending ? (
           <button>
-            <CircularProgress color='inherit' size={30} />
+            <CircularProgress className='commentLoading' size={30} />
           </button>
         ) : (
           <button type='submit'>

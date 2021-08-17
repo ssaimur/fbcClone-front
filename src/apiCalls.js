@@ -16,6 +16,11 @@ export const loginCall = async (data, dispatch) => {
       body: JSON.stringify(data),
     });
     const resData = await res.json();
+
+    if (resData.success === false) {
+      return dispatch({ type: LOGIN_FAILURE, payload: resData });
+    }
+
     dispatch({ type: LOGIN_SUCCESS, payload: resData });
   } catch (err) {
     dispatch({ type: LOGIN_FAILURE, payload: err });
@@ -31,9 +36,14 @@ export const registerCall = async (data, dispatch) => {
       body: JSON.stringify(data),
     });
     const resData = await response.json();
-    dispatch({ type: REGISTRATION_SUCCESS, payload: resData });
+
     console.log(resData);
-    return resData;
+
+    if (resData.success === false) {
+      return dispatch({ type: REGISTRATION_FAILURE, payload: resData });
+    }
+
+    dispatch({ type: REGISTRATION_SUCCESS, payload: resData });
   } catch (err) {
     dispatch({ type: REGISTRATION_FAILURE, payload: err });
   }

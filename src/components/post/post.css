@@ -1,13 +1,17 @@
 .post {
   width: 100%;
   border-radius: 5px;
-  border: 1px solid lightgreen;
+  border: 1px solid var(--brdr-secondary);
   margin: 20px 0;
   transition: 0.5s ease;
-  /* overflow: hidden; */
+  overflow: hidden;
   /* -webkit-box-shadow: 0px 1px 16px -8px rgba(0, 0, 0, 0.68);
   box-shadow: 0px 1px 16px -8px rgba(0, 0, 0, 0.68);
   margin: 30px 0; */
+}
+
+.expPost {
+  background-color: var(--clr-secondary);
 }
 
 /* .postWrapper {
@@ -18,9 +22,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px dashed lightgreen;
+  /* border-bottom: 1px solid var(--brdr-primary); */
   padding: 10px;
-  background-color: lightgreen;
+  /* background-color: var(--clr-primary); */
+  color: var(--text-primary) !important;
 }
 
 .postTopLeft {
@@ -28,14 +33,14 @@
   align-items: center;
 }
 
-.postProfileImg {
+/* .postProfileImg {
   width: 36px;
   height: 36px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid lightblue;
+  border: 1px solid #33619b;
   background-color: lightcyan;
-}
+} */
 
 .postTopLeftTop {
   display: flex;
@@ -54,11 +59,12 @@
   font-size: 12px;
   margin: 0 5px;
   font-weight: 400;
+  color: var(--text-secondary);
 }
 
 .username {
   font-weight: 400;
-  color: gray;
+  color: var(--text-secondary);
   font-size: 13px;
 }
 
@@ -68,20 +74,19 @@
   color: gray;
 }
 
-.postCenter {
-  padding: 10px;
-}
-
 .postText {
+  margin-left: 10px;
   font-size: 15px;
+  color: var(--clr-white);
 }
 
-.postImgBack {
+/* .postImgBack {
   border-radius: 5px;
   overflow: hidden;
   margin-top: 5px;
-  border: 1px dashed lightgreen;
-}
+  border: 1px dashed var(--brdr-secondary);
+  background-color: var(--clr-white);
+} */
 
 .postImg {
   width: 100%;
@@ -102,14 +107,19 @@
 }
 
 .postBottom {
-  border-top: 1px dashed lightgreen;
+  /* border-top: 1px solid var(--brdr-secondary); */
   display: flex;
   align-items: center;
   justify-content: space-between;
+  /* background-color: var(--clr-secondary); */
 }
 
 .postBottomRightMore {
   position: relative;
+}
+
+.moreIcon {
+  color: var(--clr-white);
 }
 
 .postBottomLeft {
@@ -120,6 +130,13 @@
 
 .postLikeCounter {
   font-size: 13px;
+  color: var(--clr-white);
+  cursor: pointer;
+}
+
+.postLikeCounter:hover {
+  color: var(--clr-optional);
+  text-decoration: underline;
 }
 
 .likeIcon {
@@ -127,7 +144,7 @@
   height: 24px;
   margin-right: 5px;
   cursor: pointer;
-  color: #d00412;
+  color: gold;
 }
 
 .commentIcon {
@@ -137,7 +154,7 @@
 .divider {
   height: 45px;
   width: 1px;
-  background-color: lightgray;
+  background-color: #33619b;
 }
 
 .postBottomRight {
@@ -150,4 +167,14 @@
 .postCommentText {
   font-size: 13px;
   margin-left: 5px;
+  color: var(--clr-white);
+}
+
+.postCommentText:hover {
+  color: var(--clr-optional);
+  text-decoration: underline;
+}
+
+.postComments {
+  transition: 0.3s ease;
 }

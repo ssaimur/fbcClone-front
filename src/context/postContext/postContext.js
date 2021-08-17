@@ -6,11 +6,12 @@ const PostContext = React.createContext();
 const initialState = {
   posts: [],
   postFetching: false,
+  postError: null,
+  showModal: false,
 };
 
 const PostContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log(state.posts, state.postFetching);
   // const [posts, setPosts] = useState([]);
   return (
     <PostContext.Provider value={{ ...state, dispatch }}>

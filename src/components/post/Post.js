@@ -1,19 +1,23 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState, useRef } from 'react';
 import { Favorite, FavoriteBorder, MoreVert } from '@material-ui/icons';
+import { AiOutlineFire, AiFillFire, AiOutlineFile } from 'react-icons/ai';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import './post.css';
 import { format } from 'timeago.js';
 import { Link } from 'react-router-dom';
 import { useGlobalContext } from '../../context/authContext/authContext';
 import Comment from '../comment/Comment';
-import { likeCounter } from '../../helper';
+import { formatDate, likeCounter } from '../../helper';
 import reducer from './postReducer';
 import { COMMENT_TOGGLE, MAIN_USER_LIKES, USER_FETCHED } from '../../constants';
 import OptionModal from '../optionsModal/OptionModal';
 import { IconButton } from '@material-ui/core';
 import ShowComments from '../showComments/ShowComments';
+import WhoLikedModal from '../whoLikedModal/WhoLikedModal';
+import Loader, { LoaderHeader } from '../../contentLoader';
+import ImageEdit from '../imageEdit/ImageEdit';
 
-function Post({ post }) {
+function Post({ post, explore }) {
   const {
     caption,
     userId,
@@ -25,29 +29,36 @@ function Post({ post }) {
     createdAt,
     _id,
   } = post;
-  const { user: mainUser } = useGlobalContext();
+  const { user: currentUser } = useGlobalContext();
 
   // post reducer starts here
   const initialState = {
     user: {},
-    like: likes.length,
+    like: [...likes],
     isLiked: false,
     postComments: comments,
     isComment: false,
   };
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { user, like, isLiked, postComments, isComment } = state;
-  const sortedComments = postComments.reverse();
+  const { user, like, isLiked, postComments, isComment, whoLiked } = state;
+  const sortedComments = postComments.sort(
+    (c1, c2) => new Date(c2.createdAt) - new Date(c1.createdAt)
+  );
   // post reducer ends here
 
-  const likeCredentials = { ...state, dispatch, _id, uid: mainUser._id };
+  const likeCredentials = { ...state, dispatch, _id, uid: currentUser._id };
 
   // fetchs user of this post
+
+  const [fetchingUser, setFetchingUser] = useState(false);
+
   useEffect(() => {
     const fetchUser = async () => {
+      setFetchingUser(true);
       const response = await fetch(`/users?userId=${userId}`);
       const userData = await response.json();
       dispatch({ type: USER_FETCHED, payload: userData });
+      setFetchingUser(false);
     };
 
     fetchUser();
@@ -55,103 +66,145 @@ function Post({ post }) {
 
   // checks if the logged user liked this post
   useEffect(() => {
-    if (likes.includes(mainUser._id)) {
+    if (likes.includes(currentUser._id)) {
       dispatch({ type: MAIN_USER_LIKES });
     }
-  }, [likes, mainUser._id]);
+  }, [likes, currentUser._id]);
 
   // options modals goes here
 
   const [isModal, setIsModal] = useState(false);
-  const splitDate = format(createdAt).split(' ');
-  const splitFormat = splitDate[1].split('');
-  let createDate = splitDate[0] + splitFormat[0];
+  const [showWhoLiked, setShowWhoLiked] = useState(false);
+  const [showImageEdit, setShowImageEdit] = useState(false);
 
-  if (format(createdAt) === 'just now') {
-    createDate = 'just now';
-  }
+  const deleteCreds = {
+    postId: _id,
+    userId: currentUser._id,
+    fileId: fileId,
+  };
+
+  const updateCreds = {
+    filename,
+    show: showImageEdit,
+    postId: _id,
+    caption,
+    setShow: setShowImageEdit,
+  };
+
+  // making the comment animation
+  const commentRef = useRef(null);
+  const commentContainerRef = useRef(null);
+
+  useEffect(() => {
+    const commentsHeight = commentRef.current.getBoundingClientRect().height;
+    if (isComment) {
+      commentContainerRef.current.style.height = `${commentsHeight}px`;
+    } else {
+      commentContainerRef.current.style.height = '0px';
+    }
+  }, [isComment, postComments.length]);
+  // comment animation ends here
 
   return (
-    <div className='post'>
+    <div className={`post ${explore && 'expPost'}`}>
+      {/* {fetchingUser ? (
+        <Loader />
+      ) : ( */}
       <div className='postWrapper'>
-        <div className='postTop'>
-          <div className='postTopLeft'>
-            <Link
-              to={`/${user.username}`}
-              style={{ display: 'flex', alignItems: 'center' }}
-            >
-              <img
-                className='postProfileImg'
-                src={
-                  user.dpImage
-                    ? `/posts/file/${user.dpImage}`
-                    : `/assets/persons/${
-                        user.gender === 'Female'
-                          ? 'noAvatarFemale.png'
-                          : 'noAvatar.jpg'
-                      }`
-                }
-                alt=''
-              />
-            </Link>
-            <div className='postTopLeftTop'>
-              <span className='postUsername'>
-                <Link
-                  to={`/${user.username}`}
-                  style={{ textDecoration: 'none', color: 'black' }}
-                >
-                  {user?.firstName + ' ' + user?.lastName}
-                </Link>
-                <span className='postType'>
-                  {isDp
-                    ? `Updated ${
-                        mainUser.gender == 'Male'
-                          ? 'his'
-                          : mainUser.gender == 'Female'
-                          ? 'her'
-                          : 'their'
-                      } profile picture`
-                    : 'Uploaded a post'}
+        {/* post top start here */}
+
+        {fetchingUser ? (
+          <LoaderHeader />
+        ) : (
+          <div className='postTop'>
+            <div className='postTopLeft'>
+              <Link
+                to={`/${user.username}`}
+                style={{ display: 'flex', alignItems: 'center' }}
+              >
+                <img
+                  className='profileImg postProfileImg'
+                  src={
+                    user.dpImage
+                      ? `/posts/file/${user.dpImage}`
+                      : `/assets/persons/${
+                          user.gender === 'Female'
+                            ? 'noAvatarFemale.png'
+                            : 'noAvatar.jpg'
+                        }`
+                  }
+                  alt=''
+                />
+              </Link>
+              <div className='postTopLeftTop'>
+                <span className='postUsername'>
+                  <Link
+                    to={`/${user.username}`}
+                    style={{ textDecoration: 'none', color: '#78afd9' }}
+                  >
+                    {(user.firstName || '') + ' ' + (user.lastName || '')}
+                  </Link>
+                  <span className='postType'>
+                    {isDp
+                      ? `Updated ${
+                          user.gender === 'Male'
+                            ? 'his'
+                            : user.gender === 'Female'
+                            ? 'her'
+                            : ''
+                        } DP`
+                      : 'Uploaded a post'}
+                  </span>
+                  <span className='postDate'>
+                    {formatDate(format, createdAt)}
+                  </span>
                 </span>
-                <span className='postDate'>{createDate}</span>
-              </span>
-              <span className='username'>@{user.username}</span>
+                <span className='username'>@{user.username}</span>
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
+        {/* post top ends here */}
+
+        {/* post center starts here */}
 
         <div className='postCenter'>
-          <span className='postText'>{caption}</span>
-          <div className='postImgBack'>
-            <img
-              className={isDp ? 'dpImage postImg' : 'postImg'}
-              src={`/posts/file/${filename}`}
-              alt='dp'
-            />
-          </div>
+          {caption && <span className='postText'>{caption}</span>}
+          {/* <div className='postImgBack'> */}
+          <img className='postImg' src={`/posts/file/${filename}`} alt='dp' />
+
+          {/* </div> */}
         </div>
+
+        {/* post center ends here */}
+
+        {/* post bottom starts here */}
 
         <div className='postBottom'>
           <div className='postBottomLeft'>
             {isLiked ? (
-              <Favorite
+              <AiFillFire
                 className='likeIcon'
                 onClick={() => likeCounter(likeCredentials)}
               />
             ) : (
-              <FavoriteBorder
+              <AiOutlineFire
                 className='likeIcon'
                 onClick={() => likeCounter(likeCredentials)}
               />
             )}
-            <span className='postLikeCounter'>
-              {isLiked && like === 1
-                ? 'You like it'
-                : isLiked && like > 1
-                ? `You and ${like - 1} other people like it`
-                : like === 0
-                ? 'Be the first to like'
-                : `${like} people like it`}
+            <span
+              className='postLikeCounter'
+              onClick={() => setShowWhoLiked(like.length > 0 && true)}
+            >
+              {isLiked && like.length === 1
+                ? 'You fired it'
+                : isLiked && like.length > 1
+                ? `You and ${like.length - 1} other people fired it`
+                : like.length === 0
+                ? 'Be the first to fire'
+                : `${like.length} people fired it`}
             </span>
           </div>
           {/* <div className='divider'></div> */}
@@ -161,31 +214,43 @@ function Post({ post }) {
           >
             <ChatBubbleOutlineIcon
               className='likeIcon'
-              style={{ color: 'black' }}
+              style={{ color: 'white' }}
             />
             <span className='postCommentText'>
-              {postComments.length} comments
+              {postComments.length} comment{postComments.length > 1 && 's'}
             </span>
           </div>
-          {userId === mainUser._id && (
+          {userId === currentUser._id && (
             <div className='postBottomRightMore'>
-              <IconButton onClick={() => setIsModal(!isModal)}>
-                <MoreVert />
+              <IconButton
+                onClick={() => {
+                  return setIsModal(!isModal);
+                }}
+              >
+                <MoreVert className='moreIcon' />
               </IconButton>
               {isModal && (
                 <OptionModal
-                  postId={_id}
-                  userId={mainUser._id}
-                  fileId={fileId}
+                  deleteCreds={deleteCreds}
+                  updateCreds={updateCreds}
                 />
               )}
             </div>
           )}
         </div>
-        <Comment user={mainUser} postId={_id} dispatch={dispatch} />
+
+        {/* post Bottom ends here */}
+
+        <Comment
+          user={currentUser}
+          postId={_id}
+          dispatch={dispatch}
+          explore={explore}
+        />
       </div>
-      {isComment && (
-        <div className='showComment'>
+      {/* )} */}
+      <div className='postComments' ref={commentContainerRef}>
+        <div ref={commentRef}>
           {sortedComments.map((comment) => (
             <ShowComments
               comments={comment}
@@ -195,7 +260,15 @@ function Post({ post }) {
             />
           ))}
         </div>
+      </div>
+      {showWhoLiked && (
+        <WhoLikedModal
+          likes={like}
+          show={showWhoLiked}
+          setShow={setShowWhoLiked}
+        />
       )}
+      {showImageEdit && <ImageEdit {...updateCreds} />}
     </div>
   );
 }

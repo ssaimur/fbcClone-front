@@ -12,6 +12,8 @@ const ShowComments = ({ comments, postId, dispatch }) => {
   const { userId, username, userDp, comment, commentId, createdAt, name } =
     comments;
 
+  console.count('showcomment rendered');
+
   const [showModal, setShowModal] = useState(false);
 
   const splitDate = format(createdAt).split(' ');
@@ -47,12 +49,12 @@ const ShowComments = ({ comments, postId, dispatch }) => {
             to={`/${username}`}
             style={{ textDecoration: 'none', color: 'black' }}
           >
-            <span>{name}</span>
+            <span className='commentName'>{name}</span>
           </Link>
           <span className='postDate commentDate'>{createDate}</span>
         </div>
         <div className='commentsCenterBottom'>
-          <span>{comment}</span>
+          <span className='commentComment'>{comment}</span>
         </div>
       </div>
       {user._id === userId && !showModal && (

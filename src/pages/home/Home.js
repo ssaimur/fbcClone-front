@@ -8,7 +8,6 @@ import Rightbar from '../../components/rightbar/Rightbar';
 const Home = () => {
   return (
     <>
-      <Topbar />
       <div className='homeContainer'>
         {/* <Sidebar /> */}
         <Feed />

@@ -1,100 +1,121 @@
 import React, { useRef, useState } from 'react';
 import './share.css';
-import { PermMedia, Label, Room, EmojiEmotions } from '@material-ui/icons';
+import {
+  PermMedia,
+  Label,
+  Room,
+  EmojiEmotions,
+  Cancel,
+} from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
+import { LinearProgress } from '@material-ui/core';
 import { useGlobalContext } from '../../context/authContext/authContext';
 import { useGlobalPostContext } from '../../context/postContext/postContext';
-import { POST_ADDED } from '../../constants';
+import { handlePostUpload } from '../../helper';
+import { POST_ADDED, POST_FAILED } from '../../constants';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+    position: 'sticky',
+    top: '50px',
+  },
+}));
 
 const Share = () => {
   const { user } = useGlobalContext();
   const { dispatch } = useGlobalPostContext();
+
+  const classes = useStyles();
+
   const { firstName, username, profilePicture } = user;
-  const desc = useRef(null);
+  const [desc, setDesc] = useState('');
   const [file, setFile] = useState(null);
+  const [posting, setPosting] = useState(false);
 
-  const handleClick = async () => {
-    if (!file) {
-      return alert('File is missing');
-    }
-
-    console.log(desc, file);
-
-    const formData = new FormData();
-
-    formData.append('caption', desc.current.value);
-    formData.append('file', file);
-    formData.append('userId', user._id);
-
-    setFile(null);
-    desc.current.value = '';
-
-    const response = await fetch('/posts/upload', {
-      method: 'POST',
-      body: formData,
-    });
-    const resData = await response.json();
-    console.log(resData);
-
-    dispatch({ type: POST_ADDED, payload: resData });
+  const uploadCreds = {
+    file,
+    dispatch,
+    desc,
+    userId: user._id,
+    setPosting,
+    setFile,
+    setDesc,
   };
 
   return (
     <div className='share'>
       <div className='shareWrapper'>
-        <div className='shareTop'>
+        <div className='shareLeft'>
           <img
             src={
               user.dpImage
                 ? `/posts/file/${user.dpImage}`
                 : `/assets/persons/${
-                    user.gender === 'Male'
-                      ? 'noAvatar.jpg'
-                      : 'noAvatarFemale.png'
+                    user.gender === 'Female'
+                      ? 'noAvatarFemale.png'
+                      : 'noAvatar.jpg'
                   }`
             }
             alt=''
             className='shareProfileImg'
           />
-          <input
-            placeholder={`What's in your mind ${firstName}?`}
-            className='shareInput'
-            ref={desc}
+        </div>
+
+        <div className='shareRight'>
+          <textarea
+            placeholder={`Want to add a caption ${firstName}?`}
+            className='shareCaption'
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
             required
           />
-        </div>
-        <hr className='shareHr' />
-        <div className='shareBottom'>
-          <div className='shareOptions'>
-            <label htmlFor='file' className='shareOption'>
-              {/* <PermMedia htmlColor='tomato' className='shareIcon' />
-              <span className='shareOptionText'>Photo or video</span> */}
-              <input
-                // style={{ display: 'none' }}
-                type='file'
-                id='file'
-                accept='.jpg, .png, .jpeg'
-                onChange={(e) => setFile(e.target.files[0])}
-                required
-              />
-            </label>
-            {/* <div className='shareOption'>
-              <Label htmlColor='blue' className='shareIcon' />
-              <span className='shareOptionText'>Tag</span>
+          {file && (
+            <div style={{ margin: '0 auto' }}>
+              <div className='shareImgContainer'>
+                <img
+                  className='shareImg'
+                  src={URL.createObjectURL(file)}
+                  alt='shareImg'
+                />
+                <Cancel className='cancelShare' onClick={() => setFile(null)} />
+              </div>
             </div>
-            <div className='shareOption'>
-              <Room htmlColor='green' className='shareIcon' />
-              <span className='shareOptionText'>Location</span>
-            </div>
-            <div className='shareOption'>
-              <EmojiEmotions htmlColor='goldenrod' className='shareIcon' />
-              <span className='shareOptionText'>Feelings</span>
-            </div> */}
+          )}
+          <div className='shareRightBottom'>
+            {!file && (
+              <label htmlFor='file' className='shareOption'>
+                <PermMedia className='shareIcon' />
+                <span className='shareOptionText'>Upload a photo </span>
+                <input
+                  style={{ display: 'none' }}
+                  type='file'
+                  id='file'
+                  accept='.jpg, .png, .jpeg'
+                  onChange={(e) => setFile(e.target.files[0])}
+                  required
+                />
+              </label>
+            )}
+            <button
+              className={`btn shareButton ${posting && 'sharing'}`}
+              type='button'
+              onClick={() => handlePostUpload(uploadCreds)}
+              disabled={posting}
+            >
+              Post
+            </button>
           </div>
-          <button className='shareButton' type='button' onClick={handleClick}>
-            Share
-          </button>
         </div>
       </div>
+      {posting && (
+        <div className={classes.root}>
+          <LinearProgress />
+        </div>
+      )}
     </div>
   );
 };
