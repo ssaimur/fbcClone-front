@@ -37,8 +37,6 @@ export const registerCall = async (data, dispatch) => {
     });
     const resData = await response.json();
 
-    console.log(resData);
-
     if (resData.success === false) {
       return dispatch({ type: REGISTRATION_FAILURE, payload: resData });
     }

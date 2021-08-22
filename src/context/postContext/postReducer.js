@@ -54,12 +54,6 @@ const reducer = (state, action) => {
     default:
       break;
   }
-  // if (action.type === FETCH_STARTS) {
-  //   return { ...state, postFetching: true };
-  // }
-  // if (action.type === FETCH_POSTS) {
-  //   return { ...state, posts: action.payload };
-  // }
 
   throw new Error(`No matching action type - ${action.type}`);
 };

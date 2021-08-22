@@ -5,6 +5,7 @@
 
 .modalFrontShow {
   top: 50%;
+  opacity: 1;
 }
 
 .modalFront span {

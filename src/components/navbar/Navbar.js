@@ -7,9 +7,7 @@ import {
   Explore,
   Home,
   MailOutline,
-  Notifications,
   People,
-  Person,
 } from '@material-ui/icons';
 import ProfileOptions from '../profileOptions/ProfileOptions';
 
@@ -24,20 +22,11 @@ const Navbar = () => {
     pathname = 'home';
   }
 
-  // const handleClick = (iconName) => {
-  //   let obj = {};
-  //   obj[iconName] = true;
-  //   setActive(obj);
-  // };
-
-  console.log(pathname);
-  console.log(active);
-
   useEffect(() => {
     const active = {};
     active[pathname] = true;
     setActive(active);
-  }, [location]);
+  }, [location, pathname]);
 
   return (
     <div className='navbarContainer'>

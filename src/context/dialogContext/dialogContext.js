@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer } from 'react';
 import reducer from './dialogReducer.js';
 
 const DialogContext = React.createContext();

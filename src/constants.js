@@ -38,3 +38,7 @@ export const COMMENT_TOGGLE = 'COMMENT_TOGGLE';
 export const DIALOG_LOGOUT = 'DIALOG_LOGOUT';
 export const DIALOG_DELETE = 'DIALOG_DELETE';
 export const HIDE_DIALOG = 'HIDE_DIALOG';
+
+// auth required
+
+export const AUTH_REQUIRED = 'AUTH_REQUIRED';

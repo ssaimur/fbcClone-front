@@ -1,14 +1,10 @@
 import { Close } from '@material-ui/icons';
-import React, { useState } from 'react';
-import { AiFillFire, AiOutlineConsoleSql } from 'react-icons/ai';
-import { CLEAR_POST_ERROR } from '../../constants';
-import { useGlobalPostContext } from '../../context/postContext/postContext';
+import React from 'react';
+import { AiFillFire } from 'react-icons/ai';
 import WhoLiked from '../whoLiked/WhoLiked';
 import './whoLikedModal.css';
 
 const WhoLikedModal = ({ likes, show, setShow, people, what }) => {
-  console.count('whoLikedModal rendered');
-
   return (
     <div className='whoLiked'>
       <div
@@ -23,7 +19,9 @@ const WhoLikedModal = ({ likes, show, setShow, people, what }) => {
               : what === 'followings'
               ? 'Followings'
               : 'People who fired'}
-            <AiFillFire style={{ color: 'gold', marginLeft: '5px' }} />
+            {!what && (
+              <AiFillFire style={{ color: 'gold', marginLeft: '5px' }} />
+            )}
           </span>
 
           <Close className='whoLikedClose' onClick={() => setShow(false)} />

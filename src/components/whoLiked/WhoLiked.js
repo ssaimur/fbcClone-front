@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import './whoLiked.css';
 import { Link } from 'react-router-dom';
-import { LoaderHeader, LoaderPeople, LoaderProfile } from '../../contentLoader';
+import { LoaderPeople } from '../../contentLoader';
 
 const WhoLiked = ({ userId, setShow }) => {
   const [user, setUser] = useState({});
   const [fetching, setFetching] = useState(false);
 
-  console.count('whoLiked rendered');
-
   const { username, dpImage, firstName, lastName, gender } = user;
 
-  const fetchUser = async () => {
-    setFetching(true);
-    const response = await fetch(`/users?userId=${userId}`);
-    const userData = await response.json();
-    setUser(userData);
-    setFetching(false);
-  };
   useEffect(() => {
+    const fetchUser = async () => {
+      setFetching(true);
+      const response = await fetch(`/users?userId=${userId}`);
+      const userData = await response.json();
+      setUser(userData);
+      setFetching(false);
+    };
+
     fetchUser();
   }, [userId]);
 
@@ -33,7 +32,7 @@ const WhoLiked = ({ userId, setShow }) => {
           <div className='whoLikdeLeft'>
             <Link to={`/${username}`} onClick={() => setShow(false)}>
               <img
-                className='commentDp cmntdp'
+                className='profileImg imageSmall'
                 src={
                   dpImage
                     ? `/posts/file/${dpImage}`

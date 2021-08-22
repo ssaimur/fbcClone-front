@@ -1,10 +1,10 @@
 import { CircularProgress } from '@material-ui/core';
 import { Send } from '@material-ui/icons';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { COMMENT_ADDED } from '../../constants';
 import './comment.css';
 
-const Comments = ({ user, postId, dispatch, explore }) => {
+const Comments = ({ user, postId, dispatch }) => {
   const { dpImage, firstName, lastName, _id, username } = user;
   const [isSending, setIsSending] = useState(false);
   const [comment, setComment] = useState('');
@@ -34,10 +34,10 @@ const Comments = ({ user, postId, dispatch, explore }) => {
   };
 
   return (
-    <div className={`comment ${explore && 'expComment'}`}>
+    <div className='comment'>
       <div className='commentLeft'>
         <img
-          className='commentDp'
+          className='profileImg commentDp'
           src={
             dpImage
               ? `/posts/file/${dpImage}`

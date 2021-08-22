@@ -1,6 +1,5 @@
-import { Delete, MoreVert } from '@material-ui/icons';
+import { Delete } from '@material-ui/icons';
 import React, { useState } from 'react';
-import { COMMENT_REMOVED } from '../../constants';
 import { useGlobalContext } from '../../context/authContext/authContext';
 import { format } from 'timeago.js';
 import './showComments.css';
@@ -11,8 +10,6 @@ const ShowComments = ({ comments, postId, dispatch }) => {
   const { user } = useGlobalContext();
   const { userId, username, userDp, comment, commentId, createdAt, name } =
     comments;
-
-  console.count('showcomment rendered');
 
   const [showModal, setShowModal] = useState(false);
 
@@ -29,7 +26,7 @@ const ShowComments = ({ comments, postId, dispatch }) => {
       <div className='commentsLeft'>
         <Link to={`/${username}`}>
           <img
-            className='commentDp cmntdp'
+            className='profileImg commentDp imageSmall'
             src={
               userDp
                 ? `/posts/file/${userDp}`

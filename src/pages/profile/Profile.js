@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import './profile.css';
-import Topbar from '../../components/topbar/Topbar';
-import Sidebar from '../../components/sidebar/Sidebar';
 import Feed from '../../components/feed/Feed';
-import Rightbar from '../../components/rightbar/Rightbar';
 import { useParams } from 'react-router-dom';
-import { Email, EmailOutlined, LocationOn } from '@material-ui/icons';
 import { CgGenderMale, CgGenderFemale, CgCalendarDates } from 'react-icons/cg';
-import { FaGenderless, FaEdit } from 'react-icons/fa';
+import { FaGenderless } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { GoLocation } from 'react-icons/go';
 import { BsDot } from 'react-icons/bs';
-import { AiFillHeart } from 'react-icons/ai';
 import { MdCancel } from 'react-icons/md';
-import { BiEdit, BiUpload } from 'react-icons/bi';
-import { FiEdit2 } from 'react-icons/fi';
+import { BiUpload } from 'react-icons/bi';
 import { RiImageEditFill } from 'react-icons/ri';
-import { format } from 'timeago.js';
 import { LoaderProfile } from '../../contentLoader';
 import { useGlobalContext } from '../../context/authContext/authContext';
 import WhoLikedModal from '../../components/whoLikedModal/WhoLikedModal';
 import { useGlobalPostContext } from '../../context/postContext/postContext';
 import { getDate, handlePostUpload } from '../../helper';
+import { AUTH_REQUIRED } from '../../constants';
 
 const Profile = () => {
   const { username } = useParams();
@@ -40,20 +34,16 @@ const Profile = () => {
   const {
     firstName,
     lastName,
-    dpImage,
     email,
     followers,
     followings,
     desc,
     city,
-    from,
     gender,
-    relationship,
     createdAt,
     _id,
   } = user;
   const [img, setImg] = useState(null);
-  console.log({ img, dpImage });
 
   /**
    * fetches the user of clicked profile
@@ -64,13 +54,17 @@ const Profile = () => {
       const response = await fetch(`/users?username=${username}`);
       const userData = await response.json();
 
+      if (userData.statusCode === 401) {
+        return authDispatch({ type: AUTH_REQUIRED });
+      }
+
       setUser(userData);
       setImg(userData.dpImage);
       setFetching(false);
     };
 
     fetchUser();
-  }, [username]);
+  }, [username, authDispatch]);
 
   /**
    *  handles the follow and unfollow command
@@ -101,7 +95,6 @@ const Profile = () => {
     creds.people = what === 'followers' ? followers : followings;
     setModalCreds(creds);
     setShowFollows(true);
-    console.log('clicked');
   };
 
   /**
@@ -122,9 +115,9 @@ const Profile = () => {
   };
 
   return (
-    <>
-      <div className='profile'>
-        <div className='profileWrapper'>
+    <div className='container'>
+      <div className='container profile'>
+        <div className='wrapper'>
           {fetching ? (
             <LoaderProfile />
           ) : (
@@ -224,7 +217,7 @@ const Profile = () => {
                     <p>{gender}</p>
                   </span>
                 )}
-                {getDate(createdAt) && (
+                {createdAt && (
                   <span className='profileDesc'>
                     <CgCalendarDates />
                     <p> Joined {getDate(createdAt)}</p>
@@ -261,7 +254,7 @@ const Profile = () => {
           people={modalCreds.people}
         />
       )}
-    </>
+    </div>
   );
 };
 

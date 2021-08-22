@@ -1,18 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import './share.css';
-import {
-  PermMedia,
-  Label,
-  Room,
-  EmojiEmotions,
-  Cancel,
-} from '@material-ui/icons';
+import { PermMedia, Cancel } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import { LinearProgress } from '@material-ui/core';
 import { useGlobalContext } from '../../context/authContext/authContext';
 import { useGlobalPostContext } from '../../context/postContext/postContext';
 import { handlePostUpload } from '../../helper';
-import { POST_ADDED, POST_FAILED } from '../../constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +24,7 @@ const Share = () => {
 
   const classes = useStyles();
 
-  const { firstName, username, profilePicture } = user;
+  const { firstName } = user;
   const [desc, setDesc] = useState('');
   const [file, setFile] = useState(null);
   const [posting, setPosting] = useState(false);
@@ -61,13 +54,13 @@ const Share = () => {
                   }`
             }
             alt=''
-            className='shareProfileImg'
+            className='profileImg shareProfileImg'
           />
         </div>
 
         <div className='shareRight'>
           <textarea
-            placeholder={`Want to add a caption ${firstName}?`}
+            placeholder={`How was your day ${firstName}?`}
             className='shareCaption'
             value={desc}
             onChange={(e) => setDesc(e.target.value)}

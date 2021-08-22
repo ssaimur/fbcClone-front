@@ -1,14 +1,31 @@
 .rightbar {
-  flex: 3.5;
+  flex: 1.5;
+  position: sticky;
+  top: 0;
 }
 
 .rightbarWrapper {
-  padding: 20px 20px 0 0;
+  padding: 10px;
 }
 
-.rightbarTitle {
-  margin-bottom: 20px;
-  font-size: 18px;
-  font-weight: 500;
-  margin-bottom: 10px;
+.header {
+  border-bottom: 1px solid var(--brdr-secondary);
+  padding: 10px;
+}
+
+.header h2 {
+  color: var(--clr-white);
+  font-weight: 400;
+}
+
+.box-1 {
+  background-color: var(--clr-secondary);
+  margin: 20px 0;
+  border: 1px solid var(--brdr-secondary);
+  border-radius: var(--radius-primary);
+}
+
+.noTrend {
+  color: var(--clr-white);
+  padding: 10px;
 }

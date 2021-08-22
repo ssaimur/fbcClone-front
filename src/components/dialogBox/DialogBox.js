@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   HIDE_DIALOG,
   LOGOUT_ENDS,
@@ -17,8 +17,6 @@ const DialogBox = ({
 }) => {
   const { dispatch } = useGlobalContext();
   const { dispatch: postDispatch } = useGlobalPostContext();
-
-  console.count('dialog box rendered');
 
   const handleDelete = async () => {
     const { postId, userId, fileId } = deleteDialog;

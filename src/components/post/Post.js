@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useState, useRef } from 'react';
-import { Favorite, FavoriteBorder, MoreVert } from '@material-ui/icons';
-import { AiOutlineFire, AiFillFire, AiOutlineFile } from 'react-icons/ai';
+import { MoreVert } from '@material-ui/icons';
+import { AiOutlineFire, AiFillFire } from 'react-icons/ai';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import './post.css';
 import { format } from 'timeago.js';
@@ -14,10 +14,10 @@ import OptionModal from '../optionsModal/OptionModal';
 import { IconButton } from '@material-ui/core';
 import ShowComments from '../showComments/ShowComments';
 import WhoLikedModal from '../whoLikedModal/WhoLikedModal';
-import Loader, { LoaderHeader } from '../../contentLoader';
+import { LoaderHeader } from '../../contentLoader';
 import ImageEdit from '../imageEdit/ImageEdit';
 
-function Post({ post, explore }) {
+function Post({ post }) {
   const {
     caption,
     userId,
@@ -40,7 +40,7 @@ function Post({ post, explore }) {
     isComment: false,
   };
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { user, like, isLiked, postComments, isComment, whoLiked } = state;
+  const { user, like, isLiked, postComments, isComment } = state;
   const sortedComments = postComments.sort(
     (c1, c2) => new Date(c2.createdAt) - new Date(c1.createdAt)
   );
@@ -105,11 +105,23 @@ function Post({ post, explore }) {
   }, [isComment, postComments.length]);
   // comment animation ends here
 
+  /**
+   *  profileImg height and width
+   */
+
+  const postCenter = useRef(null);
+  const [width, setWidth] = useState(0);
+
+  const postWidth = postCenter.current?.getBoundingClientRect().width;
+  useEffect(() => {
+    if (postWidth >= 480) {
+      return setWidth((500 / 100) * 80);
+    }
+    setWidth((postWidth / 100) * 80);
+  }, [postWidth]);
+
   return (
-    <div className={`post ${explore && 'expPost'}`}>
-      {/* {fetchingUser ? (
-        <Loader />
-      ) : ( */}
+    <div className='post'>
       <div className='postWrapper'>
         {/* post top start here */}
 
@@ -169,12 +181,21 @@ function Post({ post, explore }) {
 
         {/* post center starts here */}
 
-        <div className='postCenter'>
+        <div className='postCenter' ref={postCenter}>
           {caption && <span className='postText'>{caption}</span>}
-          {/* <div className='postImgBack'> */}
-          <img className='postImg' src={`/posts/file/${filename}`} alt='dp' />
 
-          {/* </div> */}
+          <img
+            className={`postImg ${isDp && 'profileImg'}`}
+            style={{
+              [isDp && 'height']: `${width}px`,
+              [isDp && 'width']: `${width}px`,
+              display: 'block',
+              margin: '0 auto',
+              [isDp && 'objectFit']: 'cover',
+            }}
+            src={`/posts/file/${filename}`}
+            alt='dp'
+          />
         </div>
 
         {/* post center ends here */}
@@ -207,7 +228,7 @@ function Post({ post, explore }) {
                 : `${like.length} people fired it`}
             </span>
           </div>
-          {/* <div className='divider'></div> */}
+
           <div
             className='postBottomRight'
             onClick={() => dispatch({ type: COMMENT_TOGGLE })}
@@ -241,14 +262,9 @@ function Post({ post, explore }) {
 
         {/* post Bottom ends here */}
 
-        <Comment
-          user={currentUser}
-          postId={_id}
-          dispatch={dispatch}
-          explore={explore}
-        />
+        <Comment user={currentUser} postId={_id} dispatch={dispatch} />
       </div>
-      {/* )} */}
+
       <div className='postComments' ref={commentContainerRef}>
         <div ref={commentRef}>
           {sortedComments.map((comment) => (

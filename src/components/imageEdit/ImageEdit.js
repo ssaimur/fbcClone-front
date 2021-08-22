@@ -1,20 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {
-  PermMedia,
-  Label,
-  Room,
-  EmojiEmotions,
-  Cancel,
-  Close,
-} from '@material-ui/icons';
+import { Close } from '@material-ui/icons';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { LinearProgress } from '@material-ui/core';
 import { useGlobalContext } from '../../context/authContext/authContext';
 import { useGlobalPostContext } from '../../context/postContext/postContext';
-import { handlePostUpdate, handlePostUpload } from '../../helper';
+import { handlePostUpdate } from '../../helper';
 import './imageEdit.css';
-import { POST_FAILED, POST_UPDATED } from '../../constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,9 +27,8 @@ const ImageEdit = ({ filename, show, postId, caption, setShow }) => {
 
   const classes = useStyles();
 
-  const { firstName, username, profilePicture } = user;
+  const { firstName } = user;
   const [desc, setDesc] = useState(caption);
-  const [file, setFile] = useState(null);
   const [posting, setPosting] = useState(false);
   const textarea = useRef(null);
 
@@ -74,13 +65,13 @@ const ImageEdit = ({ filename, show, postId, caption, setShow }) => {
                       }`
                 }
                 alt=''
-                className='shareProfileImg'
+                className='profileImg shareProfileImg'
               />
             </div>
 
             <div className='shareRight'>
               <textarea
-                placeholder={`Want to add a caption ${firstName}?`}
+                placeholder={`Want to edit caption ${firstName}?`}
                 className='shareCaption'
                 value={desc}
                 onChange={(e) => setDesc(e.target.value)}

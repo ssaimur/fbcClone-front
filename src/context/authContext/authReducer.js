@@ -7,6 +7,7 @@ import {
   REGISTRATION_FAILURE,
   REGISTRATION_START,
   REGISTRATION_SUCCESS,
+  AUTH_REQUIRED,
 } from '../../constants';
 
 const reducer = (state, action) => {
@@ -44,6 +45,9 @@ const reducer = (state, action) => {
 
     case REGISTRATION_FAILURE:
       return { ...state, isFetching: false, regiError: action.payload };
+
+    case AUTH_REQUIRED:
+      return { ...state, user: null };
 
     default:
       throw new Error(`No matching error type - ${action.type}`);

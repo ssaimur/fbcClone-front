@@ -1,40 +1,63 @@
 import React, { useEffect, useState } from 'react';
 import Person from '../../components/person/Person';
+import { AUTH_REQUIRED } from '../../constants';
+import { LoaderAllUsers, LoaderAllUsersSmall } from '../../contentLoader';
+import { useGlobalContext } from '../../context/authContext/authContext';
 import './people.css';
 
-const People = () => {
+const People = ({ sidebar }) => {
+  const { dispatch, user } = useGlobalContext();
   const [people, setPeople] = useState([]);
   const [fetching, setFetching] = useState(false);
-  console.log(people);
 
   useEffect(() => {
     const fetchPeople = async () => {
       setFetching(true);
       const response = await fetch('users/people');
       const resData = await response.json();
-      console.log(resData);
+
+      if (resData.statusCode === 401) {
+        return dispatch({ type: AUTH_REQUIRED });
+      }
       setPeople(resData.data);
       setFetching(false);
     };
 
     fetchPeople();
-  }, []);
+  }, [dispatch]);
 
   return (
-    <>
-      {!fetching && (
-        <div className='people'>
-          <div className='peopleWrapper'>
-            <div className='sticker'>
-              <p>Find people in Firegram</p>
-            </div>
-            {people.map((item) => (
-              <Person person={item} key={item._id} />
-            ))}
+    <div className='container people'>
+      <div className='wrapper'>
+        {!sidebar && (
+          <div className='sticker'>
+            <p>Find people in Firegram</p>
           </div>
-        </div>
-      )}
-    </>
+        )}
+        {fetching ? (
+          !sidebar ? (
+            <LoaderAllUsers />
+          ) : (
+            <LoaderAllUsersSmall />
+          )
+        ) : !sidebar ? (
+          people.map((item) => (
+            <Person person={item} key={item._id} sidebar={sidebar} />
+          ))
+        ) : (
+          people
+            .filter(
+              (item) =>
+                !item.followers.includes(user._id) && item._id !== user._id
+            )
+            .slice(0, 3)
+            .map((item) => (
+              <Person person={item} key={item._id} sidebar={sidebar} />
+            ))
+        )}
+      </div>
+      {!sidebar && <div className='invisibleDiv'></div>}
+    </div>
   );
 };
 

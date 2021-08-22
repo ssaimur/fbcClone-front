@@ -1,32 +1,25 @@
 import React, { useRef, useState } from 'react';
 import './register.css';
+import { useGlobalContext } from '../../context/authContext/authContext';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import { ImFire } from 'react-icons/im';
 import { Link } from 'react-router-dom';
 import { registerCall } from '../../apiCalls';
-import { useGlobalContext } from '../../context/authContext/authContext';
-import { Backdrop, CircularProgress } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import { handleRegisterSubmit } from '../../helper';
 
-const useStyles = makeStyles((theme) => ({
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: '#fff',
-  },
-}));
-
 const Register = () => {
-  const classes = useStyles();
-
   const { dispatch, isFetching, regiError } = useGlobalContext();
   const { type, msg } = regiError || {};
   const [showPassword, setShowPassword] = useState(false);
-
   const firstName = useRef(null);
   const lastName = useRef(null);
   const username = useRef(null);
   const email = useRef(null);
+  const desc = useRef(null);
+  const city = useRef(null);
   const password = useRef(null);
+  const [gender, setGender] = useState('');
 
   const registerCredentials = {
     firstName,
@@ -34,6 +27,9 @@ const Register = () => {
     username,
     email,
     password,
+    city,
+    desc,
+    gender,
     registerCall,
     dispatch,
   };
@@ -41,78 +37,125 @@ const Register = () => {
   return (
     <div className='register'>
       <div className='registerWrapper'>
-        <div className='registerLeft'>
-          <h3 className='registerLogo'>fbClone</h3>
-          <span className='registerDesc'>
-            fbClone helps you connect and share with the people in your life.
-          </span>
+        <div className='registerTop'>
+          <Link to='/' style={{ textDecoration: 'none' }}>
+            {/* <img src='/assets/logo.png' className='registerLogo' /> */}
+            <ImFire className='logoIcon' />
+          </Link>
+          <h1>Welcome to Firegram</h1>
         </div>
-        <div className='registerRight'>
+        {type && (
+          <div className='showWarning'>
+            <p>
+              {/* {(err === 'email' || 'password') && 'Invalid email or password!'} */}
+              {msg}
+            </p>
+          </div>
+        )}
+        <div className='registerCenter'>
           <form
-            className='registerBox'
             onSubmit={(e) => handleRegisterSubmit(e, registerCredentials)}
+            className='registerBox'
           >
             <div className='registerName'>
               <input
                 type='text'
-                placeholder='First name'
-                className='registerInput nameInput'
+                placeholder='*First name'
+                className='registerInput regiHalf'
                 ref={firstName}
-                required
+                id='firstName'
               />
-              <span>{type === 'firstName' && msg}</span>
+
               <input
                 type='text'
                 placeholder='Last name'
-                className='registerInput nameInput'
+                className='registerInput regiHalf'
                 ref={lastName}
+                id='lastName'
               />
             </div>
 
             <input
               type='text'
-              placeholder='Username'
+              placeholder='*Username'
               className='registerInput'
               ref={username}
-              required
-            />
-            <span>{type === 'username' && msg}</span>
-            <input
-              type='email'
-              placeholder='Email'
-              className='registerInput'
-              ref={email}
-              required
-            />
-            <span>{type === 'email' && msg}</span>
-            <input
-              type={`${showPassword ? 'text' : 'password'}`}
-              placeholder='Password'
-              className='registerInput'
-              required
-              minLength='6'
-              ref={password}
               autoComplete='off'
             />
-            <VisibilityIcon onClick={() => setShowPassword(!showPassword)}>
-              showPassword
-            </VisibilityIcon>
-            <button className='registerButton' disabled={isFetching}>
-              {isFetching ? (
-                <Backdrop className={classes.backdrop} open={isFetching}>
-                  <CircularProgress color='inherit' />
-                </Backdrop>
+
+            <input
+              type='email'
+              placeholder='*Email'
+              className='registerInput'
+              ref={email}
+              id='email'
+            />
+
+            <div className='passWrap'>
+              <input
+                type={`${showPassword ? 'text' : 'password'}`}
+                placeholder='*Password'
+                className='registerInput'
+                minLength='6'
+                autoComplete='off'
+                ref={password}
+                id='password'
+              />
+              {showPassword ? (
+                <VisibilityOffIcon
+                  onClick={() => setShowPassword(!showPassword)}
+                />
               ) : (
-                'Sign Up'
+                <VisibilityIcon
+                  onClick={() => setShowPassword(!showPassword)}
+                />
               )}
+            </div>
+
+            <div className='registerName'>
+              <select
+                id='gender'
+                className='registerInput regiSelect'
+                onChange={(e) => setGender(e.target.value)}
+                defaultValue=''
+              >
+                <option disabled value=''>
+                  Gender
+                </option>
+                <option value='Male'>Male</option>
+                <option value='Female'>Female</option>
+              </select>
+
+              <input
+                type='text'
+                placeholder='Address'
+                className='registerInput regiAdd'
+                ref={city}
+                id='address'
+              />
+            </div>
+
+            <textarea
+              type='text'
+              cols='10'
+              placeholder='Your bio goes here'
+              className='registerInput regiBio'
+              ref={desc}
+              id='bio'
+            />
+
+            <button
+              className={`registerButton ${isFetching && 'logging'}`}
+              disabled={isFetching}
+            >
+              {isFetching ? 'Signing up...' : 'Sign up'}
             </button>
-            <p className='already'>
-              Already have an account?
-              <Link to='/login' className='alreadyText'>
-                Log into an account
-              </Link>
-            </p>
           </form>
+        </div>
+        <div className='registerBottom'>
+          <p>
+            Already have an account? <Link to='/login'>Sign in</Link>
+          </p>
         </div>
       </div>
     </div>

@@ -2,7 +2,6 @@
   height: 50px;
   width: 100vw;
   max-width: 100%;
-  /* background-color: #1877f2; */
   background-color: var(--clr-primary);
   position: sticky;
   top: 0;
@@ -13,16 +12,17 @@
 
 .topbarWrapper {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 35px auto;
   align-items: center;
-  width: 90%;
-  max-width: 1170px;
+  width: 95%;
+  max-width: 500px;
   margin: 0 auto;
 }
 
 .topbarLeft {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  width: fit-content;
 }
 
 .topbarLeft a {
@@ -30,99 +30,12 @@
   align-items: center;
 }
 
-/* .logo {
+.logo {
   width: 35px;
   height: auto;
   cursor: pointer;
-} */
-
-.logoIcon {
-  color: var(--clr-optional);
 }
 
 .topbarCenter {
   margin-left: 10px;
 }
-
-.searchbar {
-  width: 100%;
-  height: 30px;
-  background-color: var(--back-primary);
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid var(--brdr-primary);
-  overflow: hidden;
-}
-
-.searchIcon {
-  font-size: 20px !important;
-  padding: 5px 10px;
-  cursor: pointer;
-  color: var(--clr-white);
-  border-left: 1px solid var(--brdr-primary);
-}
-
-.searchInput {
-  border: none;
-  width: 100%;
-  margin-left: 10px;
-  background-color: var(--back-primary);
-  border: var(--brdr-primary);
-}
-
-.searchInput:focus {
-  outline: none;
-}
-
-/*
-
-.topbarRight {
-  flex: 4;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  color: #fff;
-}
-
-.topbarLink {
-  font-size: 14px;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-.topbarIcons {
-  display: flex;
-}
-
-.topbarIconItem {
-  margin-right: 15px;
-  cursor: pointer;
-  position: relative;
-}
-
-.topbarIconBadge {
-  width: 15px;
-  height: 15px;
-  background-color: red;
-  border-radius: 50%;
-  color: #fff;
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.topbarImg {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid lightblue;
-  background-color: lightcyan;
-  cursor: pointer;
-} */

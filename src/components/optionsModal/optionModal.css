@@ -7,7 +7,7 @@
   background-color: var(--clr-primary);
   border-radius: 5px;
   color: #000;
-  border: 1px solid var(--brdr-secondary);
+  border: 2px solid var(--brdr-primary);
 }
 
 .optionModalItems {
@@ -27,11 +27,12 @@
 .optionModal::after {
   content: '';
   position: absolute;
-  right: 23px;
+  right: 22px;
   top: 100%;
   display: block;
   width: 20px;
   height: 20px;
-  background-color: var(--clr-primary);
+  background-color: var(--brdr-primary);
   transform: translate(50%, -50%) rotate(-45deg);
+  z-index: -999;
 }

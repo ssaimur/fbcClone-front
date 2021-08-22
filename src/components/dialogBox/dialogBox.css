@@ -1,11 +1,12 @@
 .dialogFront {
-  background-color: var(--clr-primary);
+  background-color: var(--clr-danger);
   bottom: -100%;
   transform: translate(-50%, 50%);
 }
 
 .dialogFrontShow {
   bottom: 50%;
+  opacity: 1;
 }
 
 .dialogFront .deleteAlert {
@@ -20,10 +21,14 @@
   margin-bottom: 10px;
 }
 .dialogFront .dialogYes {
-  background-color: var(--clr-optional);
+  color: var(--text-5);
+  background-color: transparent;
+  border: 1px solid var(--brdr-danger);
 }
 .dialogFront .dialogCancel {
-  background-color: var(--brdr-primary);
+  color: var(--clr-white);
+  background-color: transparent;
+  border: 1px solid var(--clr-white);
 }
 
 .dialogBtns button {

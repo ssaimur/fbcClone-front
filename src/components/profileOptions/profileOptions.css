@@ -7,7 +7,7 @@
   background-color: var(--clr-primary);
   border-radius: 5px;
   color: #000;
-  border: 1px solid var(--brdr-primary);
+  border: 2px solid var(--brdr-primary);
 }
 
 .profileOptionsItems {
@@ -33,9 +33,10 @@
   display: block;
   width: 20px;
   height: 20px;
-  background-color: var(--clr-primary);
+  background-color: var(--brdr-primary);
   border-bottom: 1px solid var(--brdr-primary);
   border-left: 1px solid var(--brdr-primary);
   border-radius: 0 50px 0 0;
   transform: translate(50%, -50%) rotate(-45deg);
+  z-index: -999;
 }

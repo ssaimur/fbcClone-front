@@ -33,6 +33,7 @@ const reducer = (state, action) => {
           // whoLiked: state.whoLiked,
         };
       }
+      break;
 
     case COMMENT_TOGGLE:
       return { ...state, isComment: !state.isComment };

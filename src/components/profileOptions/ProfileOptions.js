@@ -4,7 +4,7 @@ import { Person } from '@material-ui/icons';
 import { FiLogOut } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { useGlobalContext } from '../../context/authContext/authContext';
-import { DIALOG_LOGOUT, LOGOUT_ENDS, LOGOUT_STARTS } from '../../constants';
+import { DIALOG_LOGOUT } from '../../constants';
 import { useGlobalDialogContext } from '../../context/dialogContext/dialogContext';
 
 const ProfileOptions = () => {
