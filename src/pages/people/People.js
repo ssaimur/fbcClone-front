@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Person from '../../components/person/Person';
-import { AUTH_REQUIRED } from '../../constants';
+import url, { AUTH_REQUIRED } from '../../constants';
 import { LoaderAllUsers, LoaderAllUsersSmall } from '../../contentLoader';
 import { useGlobalContext } from '../../context/authContext/authContext';
 import './people.css';
@@ -13,7 +13,11 @@ const People = ({ sidebar }) => {
   useEffect(() => {
     const fetchPeople = async () => {
       setFetching(true);
-      const response = await fetch('users/people');
+      const response = await fetch(`${url}/users/people`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+      });
       const resData = await response.json();
 
       if (resData.statusCode === 401) {

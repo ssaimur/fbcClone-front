@@ -5,7 +5,7 @@ import Post from '../post/Post';
 import Share from '../share/Share';
 import { BsFilePost } from 'react-icons/bs';
 import { useGlobalPostContext } from '../../context/postContext/postContext';
-import { AUTH_REQUIRED, FETCH_POSTS, FETCH_STARTS } from '../../constants';
+import url, { AUTH_REQUIRED, FETCH_POSTS, FETCH_STARTS } from '../../constants';
 import Loader from '../../contentLoader';
 import { Link } from 'react-router-dom';
 
@@ -19,10 +19,22 @@ function Feed({ username, explorePosts, firstName }) {
     const fetchData = async () => {
       dispatch({ type: FETCH_STARTS });
       const response = username
-        ? await fetch(`/posts/profile/${username}`)
+        ? await fetch(`${url}/posts/profile/${username}`, {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'include',
+          })
         : explorePosts
-        ? await fetch('/posts/explore')
-        : await fetch(`/posts/newsfeed/${user._id}`);
+        ? await fetch(`${url}/posts/explore`, {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'include',
+          })
+        : await fetch(`${url}/posts/newsfeed/${user._id}`, {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'include',
+          });
       const resData = await response.json();
 
       if (resData.statusCode === 401) {

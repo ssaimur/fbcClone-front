@@ -2,7 +2,9 @@ import { CircularProgress } from '@material-ui/core';
 import { Send } from '@material-ui/icons';
 import React, { useState } from 'react';
 import { COMMENT_ADDED } from '../../constants';
+import url from '../../constants';
 import './comment.css';
+console.log(url);
 
 const Comments = ({ user, postId, dispatch }) => {
   const { dpImage, firstName, lastName, _id, username } = user;
@@ -20,9 +22,11 @@ const Comments = ({ user, postId, dispatch }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSending(true);
-    const response = await fetch(`/posts/comment/${postId}`, {
+    const response = await fetch(`${url}/posts/comment/${postId}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
+      mode: 'cors',
+      credentials: 'include',
       body: JSON.stringify(commentCreds),
     });
     const resData = await response.json();
@@ -40,7 +44,7 @@ const Comments = ({ user, postId, dispatch }) => {
           className='profileImg commentDp'
           src={
             dpImage
-              ? `/posts/file/${dpImage}`
+              ? `${url}/posts/file/${dpImage}`
               : `/assets/persons/${
                   user.gender === 'Female'
                     ? 'noAvatarFemale.png'

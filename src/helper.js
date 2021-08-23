@@ -5,6 +5,7 @@ import {
   POST_FAILED,
   POST_UPDATED,
 } from './constants';
+import url from './constants';
 
 /**
  * cortrolls the post like behaviour
@@ -100,12 +101,16 @@ export const handlePostUpload = async (creds) => {
   setPosting(true);
 
   const response = dp
-    ? await fetch('/posts/dp/upload', {
+    ? await fetch(`${url}/posts/dp/upload`, {
         method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
         body: formData,
       })
-    : await fetch('/posts/upload', {
+    : await fetch(`${url}/posts/upload`, {
         method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
         body: formData,
       });
   const resData = await response.json();
@@ -131,9 +136,11 @@ export const handlePostUpdate = async (updateCreds) => {
   const { setPosting, setShow, postId, desc, dispatch } = updateCreds;
 
   setPosting(true);
-  const response = await fetch(`/posts/update/${postId}`, {
+  const response = await fetch(`${url}/posts/update/${postId}`, {
     method: 'PUT',
     headers: { 'content-type': 'application/json' },
+    mode: 'cors',
+    credentials: 'include',
     body: JSON.stringify({ caption: desc }),
   });
   const resData = await response.json();

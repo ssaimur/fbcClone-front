@@ -23,8 +23,6 @@ const ImageEdit = ({ filename, show, postId, caption, setShow }) => {
   const { user } = useGlobalContext();
   const { dispatch } = useGlobalPostContext();
 
-  console.count('imageEdit rendered');
-
   const classes = useStyles();
 
   const { firstName } = user;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './whoLiked.css';
 import { Link } from 'react-router-dom';
 import { LoaderPeople } from '../../contentLoader';
+import url from '../../constants';
 
 const WhoLiked = ({ userId, setShow }) => {
   const [user, setUser] = useState({});
@@ -12,7 +13,11 @@ const WhoLiked = ({ userId, setShow }) => {
   useEffect(() => {
     const fetchUser = async () => {
       setFetching(true);
-      const response = await fetch(`/users?userId=${userId}`);
+      const response = await fetch(`${url}/users?userId=${userId}`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+      });
       const userData = await response.json();
       setUser(userData);
       setFetching(false);

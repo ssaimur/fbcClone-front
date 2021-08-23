@@ -15,7 +15,7 @@ import { useGlobalContext } from '../../context/authContext/authContext';
 import WhoLikedModal from '../../components/whoLikedModal/WhoLikedModal';
 import { useGlobalPostContext } from '../../context/postContext/postContext';
 import { getDate, handlePostUpload } from '../../helper';
-import { AUTH_REQUIRED } from '../../constants';
+import url, { AUTH_REQUIRED } from '../../constants';
 
 const Profile = () => {
   const { username } = useParams();
@@ -51,7 +51,11 @@ const Profile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       setFetching(true);
-      const response = await fetch(`/users?username=${username}`);
+      const response = await fetch(`${url}/users?username=${username}`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+      });
       const userData = await response.json();
 
       if (userData.statusCode === 401) {
@@ -72,9 +76,11 @@ const Profile = () => {
 
   const handleClick = () => {
     setFollows(!follows);
-    fetch(`/users/follow/${_id}`, {
+    fetch(`${url}/users/follow/${_id}`, {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
+      mode: 'cors',
+      credentials: 'include',
       body: JSON.stringify({ userId: currentUser._id }),
     });
   };

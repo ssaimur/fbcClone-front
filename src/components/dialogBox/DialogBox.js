@@ -1,5 +1,5 @@
 import React from 'react';
-import {
+import url, {
   HIDE_DIALOG,
   LOGOUT_ENDS,
   LOGOUT_STARTS,
@@ -23,9 +23,11 @@ const DialogBox = ({
     dialogDispatch({ type: HIDE_DIALOG });
     postDispatch({ type: POST_DELETED, payload: postId });
 
-    await fetch(`posts/delete/${postId}`, {
+    await fetch(`${url}/posts/delete/${postId}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
+      mode: 'cors',
+      credentials: 'include',
       body: JSON.stringify({ userId, fileId }),
     });
   };
@@ -33,7 +35,11 @@ const DialogBox = ({
   const handleLogOut = async () => {
     dialogDispatch({ type: HIDE_DIALOG });
     dispatch({ type: LOGOUT_STARTS });
-    await fetch('/auth/logout', { method: 'POST' });
+    await fetch(`${url}/auth/logout`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+    });
     dispatch({ type: LOGOUT_ENDS });
   };
 

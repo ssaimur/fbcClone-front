@@ -9,7 +9,11 @@ import { useGlobalContext } from '../../context/authContext/authContext';
 import Comment from '../comment/Comment';
 import { formatDate, likeCounter } from '../../helper';
 import reducer from './postReducer';
-import { COMMENT_TOGGLE, MAIN_USER_LIKES, USER_FETCHED } from '../../constants';
+import url, {
+  COMMENT_TOGGLE,
+  MAIN_USER_LIKES,
+  USER_FETCHED,
+} from '../../constants';
 import OptionModal from '../optionsModal/OptionModal';
 import { IconButton } from '@material-ui/core';
 import ShowComments from '../showComments/ShowComments';
@@ -55,7 +59,11 @@ function Post({ post }) {
   useEffect(() => {
     const fetchUser = async () => {
       setFetchingUser(true);
-      const response = await fetch(`/users?userId=${userId}`);
+      const response = await fetch(`${url}/users?userId=${userId}`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+      });
       const userData = await response.json();
       dispatch({ type: USER_FETCHED, payload: userData });
       setFetchingUser(false);

@@ -1,13 +1,15 @@
 import React from 'react';
-import { COMMENT_REMOVED } from '../../constants';
+import url, { COMMENT_REMOVED } from '../../constants';
 import './commentModal.css';
 
 const CommentModal = ({ postId, commentId, toggle, dispatch }) => {
   const handleClick = async () => {
     dispatch({ type: COMMENT_REMOVED, payload: commentId });
-    await fetch(`posts/comment/remove/${postId}`, {
+    await fetch(`${url}/posts/comment/remove/${postId}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
+      mode: 'cors',
+      credentials: 'include',
       body: JSON.stringify({ commentId }),
     });
   };

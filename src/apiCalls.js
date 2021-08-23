@@ -5,14 +5,17 @@ const {
   REGISTRATION_START,
   REGISTRATION_SUCCESS,
   REGISTRATION_FAILURE,
+  default: url,
 } = require('./constants');
 
 export const loginCall = async (data, dispatch) => {
   try {
     dispatch({ type: LOGIN_START });
-    const res = await fetch('/auth/login', {
+    const res = await fetch(`${url}/auth/login`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
+      mode: 'cors',
+      credentials: 'include',
       body: JSON.stringify(data),
     });
     const resData = await res.json();
@@ -30,9 +33,11 @@ export const loginCall = async (data, dispatch) => {
 export const registerCall = async (data, dispatch) => {
   dispatch({ type: REGISTRATION_START });
   try {
-    const response = await fetch('/auth/register', {
+    const response = await fetch(`${url}/auth/register`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
+      mode: 'cors',
+      credentials: 'include',
       body: JSON.stringify(data),
     });
     const resData = await response.json();

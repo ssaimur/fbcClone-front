@@ -42,3 +42,10 @@ export const HIDE_DIALOG = 'HIDE_DIALOG';
 // auth required
 
 export const AUTH_REQUIRED = 'AUTH_REQUIRED';
+
+// the url
+
+const url = 'https://social-firegram.herokuapp.com/api';
+// const url = 'http://localhost:4000/api';
+
+export default url;
