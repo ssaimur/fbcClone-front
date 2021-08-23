@@ -13,11 +13,13 @@ import url from './constants';
 
 export const likeCounter = (likeCredentials) => {
   const { dispatch, uid, _id } = likeCredentials;
+  console.log({ uid });
 
   dispatch({ type: INCREASE_DECREASE_LIKES, payload: uid });
 
   fetch(`${url}/posts/like/${_id}`, {
     method: 'PUT',
+    headers: { 'content-type': 'application/json' },
     mode: 'cors',
     credentials: 'include',
     body: JSON.stringify({ uid }),
