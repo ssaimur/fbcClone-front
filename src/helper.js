@@ -11,10 +11,17 @@ import url from './constants';
  * cortrolls the post like behaviour
  */
 
-export const likeCounter = async (likeCredentials) => {
-  const { dispatch, uid } = likeCredentials;
+export const likeCounter = (likeCredentials) => {
+  const { dispatch, uid, _id } = likeCredentials;
 
   dispatch({ type: INCREASE_DECREASE_LIKES, payload: uid });
+
+  fetch(`${url}/posts/like/${_id}`, {
+    method: 'PUT',
+    mode: 'cors',
+    credentials: 'include',
+    body: JSON.stringify({ uid }),
+  });
 };
 
 /**
