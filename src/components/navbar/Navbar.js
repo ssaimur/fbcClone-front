@@ -10,6 +10,7 @@ import {
   People,
 } from '@material-ui/icons';
 import ProfileOptions from '../profileOptions/ProfileOptions';
+import url from '../../constants';
 
 const Navbar = () => {
   const { user } = useGlobalContext();
@@ -56,7 +57,7 @@ const Navbar = () => {
             className='profileImg navProfileImg'
             src={
               user.dpImage
-                ? `/posts/file/${user.dpImage}`
+                ? `${url}/posts/file/${user.dpImage}`
                 : `/assets/persons/${
                     user.gender === 'Female'
                       ? 'noAvatarFemale.png'

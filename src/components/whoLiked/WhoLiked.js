@@ -40,7 +40,7 @@ const WhoLiked = ({ userId, setShow }) => {
                 className='profileImg imageSmall'
                 src={
                   dpImage
-                    ? `/posts/file/${dpImage}`
+                    ? `${url}/posts/file/${dpImage}`
                     : `/assets/persons/${
                         gender === 'Female'
                           ? 'noAvatarFemale.png'

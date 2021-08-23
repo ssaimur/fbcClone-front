@@ -146,7 +146,7 @@ function Post({ post }) {
                   className='profileImg postProfileImg'
                   src={
                     user.dpImage
-                      ? `/posts/file/${user.dpImage}`
+                      ? `${url}/posts/file/${user.dpImage}`
                       : `/assets/persons/${
                           user.gender === 'Female'
                             ? 'noAvatarFemale.png'
@@ -201,7 +201,7 @@ function Post({ post }) {
               margin: '0 auto',
               [isDp && 'objectFit']: 'cover',
             }}
-            src={`/posts/file/${filename}`}
+            src={`${url}/posts/file/${filename}`}
             alt='dp'
           />
         </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import url from '../../constants';
 import './person.css';
 
 const Person = ({ person, sidebar }) => {
@@ -12,7 +13,7 @@ const Person = ({ person, sidebar }) => {
             className={`profileImg ${!sidebar && 'personDp'}`}
             src={
               dpImage
-                ? `/posts/file/${dpImage}`
+                ? `${url}/posts/file/${dpImage}`
                 : `/assets/persons/${
                     gender === 'Female' ? 'noAvatarFemale.png' : 'noAvatar.jpg'
                   }`

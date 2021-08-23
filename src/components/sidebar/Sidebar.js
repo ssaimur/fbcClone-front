@@ -11,7 +11,7 @@ import { ImFire } from 'react-icons/im';
 
 import { Link, useLocation } from 'react-router-dom';
 import { useGlobalContext } from '../../context/authContext/authContext';
-import { DIALOG_LOGOUT } from '../../constants';
+import url, { DIALOG_LOGOUT } from '../../constants';
 import { useGlobalDialogContext } from '../../context/dialogContext/dialogContext';
 
 function Sidebar() {
@@ -107,7 +107,7 @@ function Sidebar() {
                 className='profileImg sidebarDp'
                 src={
                   dpImage
-                    ? `/posts/file/${dpImage}`
+                    ? `${url}/posts/file/${dpImage}`
                     : `/assets/persons/${
                         gender === 'Female'
                           ? 'noAvatarFemale.png'

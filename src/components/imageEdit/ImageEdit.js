@@ -7,6 +7,7 @@ import { useGlobalContext } from '../../context/authContext/authContext';
 import { useGlobalPostContext } from '../../context/postContext/postContext';
 import { handlePostUpdate } from '../../helper';
 import './imageEdit.css';
+import url from '../../constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,7 +56,7 @@ const ImageEdit = ({ filename, show, postId, caption, setShow }) => {
               <img
                 src={
                   user.dpImage
-                    ? `/posts/file/${user.dpImage}`
+                    ? `${url}/posts/file/${user.dpImage}`
                     : `/assets/persons/${
                         user.gender === 'Female'
                           ? 'noAvatarFemale.png'
@@ -80,7 +81,7 @@ const ImageEdit = ({ filename, show, postId, caption, setShow }) => {
                 <div className='shareImgContainer'>
                   <img
                     className='shareImg'
-                    src={`/posts/file/${filename}`}
+                    src={`${url}/posts/file/${filename}`}
                     alt='shareImg'
                   />
                 </div>

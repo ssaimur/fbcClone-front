@@ -6,6 +6,7 @@ import { LinearProgress } from '@material-ui/core';
 import { useGlobalContext } from '../../context/authContext/authContext';
 import { useGlobalPostContext } from '../../context/postContext/postContext';
 import { handlePostUpload } from '../../helper';
+import url from '../../constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,7 +47,7 @@ const Share = () => {
           <img
             src={
               user.dpImage
-                ? `/posts/file/${user.dpImage}`
+                ? `${url}/posts/file/${user.dpImage}`
                 : `/assets/persons/${
                     user.gender === 'Female'
                       ? 'noAvatarFemale.png'

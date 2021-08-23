@@ -5,6 +5,7 @@ import { format } from 'timeago.js';
 import './showComments.css';
 import { Link } from 'react-router-dom';
 import CommentModal from '../commentModal/CommentModal';
+import url from '../../constants';
 
 const ShowComments = ({ comments, postId, dispatch }) => {
   const { user } = useGlobalContext();
@@ -29,7 +30,7 @@ const ShowComments = ({ comments, postId, dispatch }) => {
             className='profileImg commentDp imageSmall'
             src={
               userDp
-                ? `/posts/file/${userDp}`
+                ? `${url}/posts/file/${userDp}`
                 : `/assets/persons/${
                     user.gender === 'Female'
                       ? 'noAvatarFemale.png'

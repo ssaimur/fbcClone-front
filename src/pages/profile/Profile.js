@@ -134,7 +134,7 @@ const Profile = () => {
                     <img
                       src={
                         img
-                          ? `/posts/file/${img}`
+                          ? `${url}/posts/file/${img}`
                           : `/assets/persons/${
                               gender === 'Female'
                                 ? 'noAvatarFemale.png'
