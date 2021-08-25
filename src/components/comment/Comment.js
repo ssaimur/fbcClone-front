@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { COMMENT_ADDED } from '../../constants';
 import url from '../../constants';
 import './comment.css';
-console.log(url);
 
 const Comments = ({ user, postId, dispatch }) => {
   const { dpImage, firstName, lastName, _id, username } = user;
