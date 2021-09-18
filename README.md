@@ -1,1 +1,2 @@
-# Facebook clone
+# Firegram application 
+a social media application
