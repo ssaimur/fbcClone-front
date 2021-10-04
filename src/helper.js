@@ -13,7 +13,6 @@ import url from './constants';
 
 export const likeCounter = (likeCredentials) => {
   const { dispatch, uid, _id } = likeCredentials;
-  console.log({ uid });
 
   dispatch({ type: INCREASE_DECREASE_LIKES, payload: uid });
 

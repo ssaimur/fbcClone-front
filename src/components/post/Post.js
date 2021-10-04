@@ -33,12 +33,7 @@ function Post({ post }) {
     createdAt,
     _id,
   } = post;
-  /////////////delete later/////////////
-  console.log({
-    createdAt: formatDate(format, createdAt),
-    createdRaw: createdAt,
-  });
-  /////////////delete later/////////////
+
   const { user: currentUser } = useGlobalContext();
 
   // post reducer starts here
