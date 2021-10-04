@@ -90,7 +90,7 @@ const Share = () => {
                   id='file'
                   accept='.jpg, .png, .jpeg'
                   onChange={(e) => setFile(e.target.files[0])}
-                  required
+                  // required
                 />
               </label>
             )}

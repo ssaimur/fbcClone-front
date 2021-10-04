@@ -97,9 +97,9 @@ export const handlePostUpload = async (creds) => {
     dp,
   } = creds;
 
-  if (!file) {
-    return alert('Photo is missing');
-  }
+  // if (!file) {
+  //   return alert('Photo is missing');
+  // }
 
   const formData = new FormData();
 

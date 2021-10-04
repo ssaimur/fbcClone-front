@@ -33,6 +33,12 @@ function Post({ post }) {
     createdAt,
     _id,
   } = post;
+  /////////////delete later/////////////
+  console.log({
+    createdAt: formatDate(format, createdAt),
+    createdRaw: createdAt,
+  });
+  /////////////delete later/////////////
   const { user: currentUser } = useGlobalContext();
 
   // post reducer starts here
@@ -190,20 +196,22 @@ function Post({ post }) {
         {/* post center starts here */}
 
         <div className='postCenter' ref={postCenter}>
-          {caption && <span className='postText'>{caption}</span>}
+          {caption && <div className='postText'>{caption}</div>}
 
-          <img
-            className={`postImg ${isDp && 'profileImg'}`}
-            style={{
-              [isDp && 'height']: `${width}px`,
-              [isDp && 'width']: `${width}px`,
-              display: 'block',
-              margin: '0 auto',
-              [isDp && 'objectFit']: 'cover',
-            }}
-            src={`${url}/posts/file/${filename}`}
-            alt='dp'
-          />
+          {filename && (
+            <img
+              className={`postImg ${isDp && 'profileImg'}`}
+              style={{
+                [isDp && 'height']: `${width}px`,
+                [isDp && 'width']: `${width}px`,
+                display: 'block',
+                margin: '0 auto',
+                [isDp && 'objectFit']: 'cover',
+              }}
+              src={`${url}/posts/file/${filename}`}
+              alt='dp'
+            />
+          )}
         </div>
 
         {/* post center ends here */}
