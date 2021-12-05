@@ -6,9 +6,9 @@ import Profile from './pages/profile/Profile';
 import Explore from './pages/explore/Explore';
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
-  Redirect,
+  Navigate,
 } from 'react-router-dom';
 import { useGlobalContext } from './context/authContext/authContext';
 import Navbar from './components/navbar/Navbar';
@@ -21,6 +21,7 @@ import ScrollToTop from './ScrollToTop';
 import People from './pages/people/People';
 import Chat from './pages/chat/Chat';
 import Rightbar from './components/rightbar/Rightbar';
+import PrivateRoute from './components/private/PrivateRouter';
 
 function App() {
   const { user } = useGlobalContext();
@@ -47,29 +48,63 @@ function App() {
         {user && width <= 767 && <Topbar />}
         <div className='appBody'>
           {user && width >= 768 && <Sidebar />}
-          <Switch>
-            <Route exact path='/'>
-              {user ? <Home /> : <Redirect to='/login' />}
-            </Route>
-            <Route path='/login'>
-              {user ? <Redirect to='/' /> : <Login />}
-            </Route>
-            <Route path='/register'>
-              {user ? <Redirect to='/' /> : <Register />}
-            </Route>
-            <Route path='/explore'>
-              {user ? <Explore /> : <Redirect to='/login' />}
-            </Route>
-            <Route path='/people'>
-              {user ? <People /> : <Redirect to='/login' />}
-            </Route>
-            <Route path='/chat'>
-              {user ? <Chat /> : <Redirect to='/login' />}
-            </Route>
-            <Route path='/:username'>
-              {user ? <Profile /> : <Redirect to='/login' />}
-            </Route>
-          </Switch>
+          <Routes>
+            <Route
+              exact
+              path='/'
+              element={
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path='/login'
+              element={user ? <Navigate to='/' /> : <Login />}
+            />
+
+            <Route
+              path='/register'
+              element={user ? <Navigate to='/' /> : <Register />}
+            />
+
+            <Route
+              path='/explore'
+              element={
+                <PrivateRoute>
+                  <Explore />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path='/people'
+              element={
+                <PrivateRoute>
+                  <People />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path='/chat'
+              element={
+                <PrivateRoute>
+                  <Chat />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path='/:username'
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
           {user && width >= 900 && <Rightbar />}
         </div>
         {user && width <= 767 && <Navbar />}
